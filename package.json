@@ -1,0 +1,41 @@
+{
+  "name": "@heroku-cli/test-utils",
+  "version": "0.0.1",
+  "description": "Test utilities for Heroku CLI",
+  "author": "Heroku",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/chai": "^4.3.13",
+    "@types/node": "^22.15.3",
+    "@types/sinon": "^17.0.4",
+    "chai": "^4.4.1",
+    "eslint": "^8.57.0",
+    "eslint-config-oclif": "^5.0.0",
+    "eslint-config-oclif-typescript": "^3.1.14",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-mocha": "^10.4.3",
+    "sinon": "^18.0.1",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@heroku-cli/color": "^2.0.4",
+    "@heroku-cli/command": "^11.5.0",
+    "@oclif/core": "^2.16.0",
+    "nock": "^13.2.9",
+    "stdout-stderr": "^0.1.13"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --ext .ts --config .eslintrc.js",
+    "prepare": "npm run build"
+  }
+} 

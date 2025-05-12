@@ -10,16 +10,16 @@
     "dist"
   ],
   "devDependencies": {
-    "@types/chai": "^4.3.13",
+    "@types/chai": "^5.2.2",
     "@types/node": "^22.15.3",
     "@types/sinon": "^17.0.4",
-    "chai": "^4.4.1",
-    "eslint": "^8.57.0",
-    "eslint-config-oclif": "^5.0.0",
+    "chai": "^5.2.0",
+    "eslint": "^9.26.0",
+    "eslint-config-oclif": "^6.0.56",
     "eslint-config-oclif-typescript": "^3.1.14",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-mocha": "^10.4.3",
-    "sinon": "^18.0.1",
+    "eslint-plugin-mocha": "^11.0.0",
+    "sinon": "^20.0.0",
     "typescript": "^5.4.0"
   },
   "dependencies": {

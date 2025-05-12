@@ -26,7 +26,7 @@
     "@heroku-cli/color": "^2.0.4",
     "@heroku-cli/command": "^11.5.0",
     "@oclif/core": "^2.16.0",
-    "nock": "^13.2.9",
+    "nock": "^14.0.4",
     "stdout-stderr": "^0.1.13"
   },
   "engines": {

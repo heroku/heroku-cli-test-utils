@@ -4,6 +4,7 @@ module.exports = {
     'oclif-typescript',
     'plugin:mocha/recommended',
   ],
+  ignorePatterns: ['dist/**/*'],
   overrides: [
     {
       files: ['test/**/*.ts', 'test/**/*.js'],

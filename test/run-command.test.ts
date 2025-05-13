@@ -18,14 +18,6 @@ describe('run-command', function () {
     }
   }
 
-  class OutputCommand extends Command {
-    async run() {
-      this.log('stdout message')
-      this.log('stderr message')
-      return {success: true}
-    }
-  }
-
   it('should run a command successfully', async function () {
     const result = await runCommand(TestCommand)
     expect(result).to.deep.equal({success: true})
@@ -43,12 +35,6 @@ describe('run-command', function () {
         expect.fail('error should be an instance of Error')
       }
     }
-  })
-
-  it('should capture stdout and stderr', async function () {
-    await runCommand(OutputCommand)
-    // Note: stdout/stderr are automatically captured by stdout-stderr
-    // We can't directly test the output here as it's handled by the library
   })
 
   it('should load config successfully', async function () {

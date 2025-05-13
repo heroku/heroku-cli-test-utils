@@ -18,4 +18,4 @@ jobs:
       - name: unit tests
         run: npm test
       - name: linting
-        run: yarn lint
+        run: npm run lint

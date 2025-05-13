@@ -16,6 +16,7 @@
     "@types/node": "^22.15.3",
     "@types/sinon": "^17.0.4",
     "mocha": "^11.2.2",
+    "nyc": "^17.1.0",
     "ts-node": "^10.9.2"
   },
   "peerDependencies": {
@@ -52,6 +53,6 @@
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts --config .eslintrc.js",
     "prepare": "npm run build",
-    "test": "mocha 'test/**/*.test.ts'"
+    "test": "nyc mocha  --forbid-only \"test/**/*.test.ts\""
   }
 }

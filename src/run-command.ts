@@ -35,7 +35,7 @@ export const runCommand = async (Cmd: GenericCmd, args: string[] = [], printStd 
 }
 
 export const getConfig = async () => {
-  const pjsonPath = path.join(__dirname, '../../package.json')
+  const pjsonPath = path.join(process.cwd(), 'package.json')
   const conf = new Config({root: pjsonPath})
   await conf.load()
   return conf

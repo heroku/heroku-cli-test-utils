@@ -8,20 +8,21 @@ let stderrOutput = ''
 export function setupStdoutStderr() {
   stdoutOutput = ''
   stdoutWriteStub = sinon.stub(process.stdout, 'write').callsFake((str: Uint8Array | string) => {
-    stdoutOutput += str.toString()
+    stdoutOutput += str instanceof Uint8Array ? Buffer.from(str).toString() : str.toString()
     return true
   })
+
   stderrOutput = ''
   stderrWriteStub = sinon.stub(process.stderr, 'write').callsFake((str: Uint8Array | string) => {
-    stderrOutput += str.toString()
+    stderrOutput += str instanceof Uint8Array ? Buffer.from(str).toString() : str.toString()
     return true
   })
 }
 
 export function restoreStdoutStderr() {
-  stdoutWriteStub.restore()
+  if (stdoutWriteStub) stdoutWriteStub.restore()
   stdoutOutput = ''
-  stderrWriteStub.restore()
+  if (stderrWriteStub) stderrWriteStub.restore()
   stderrOutput = ''
 }
 

@@ -1,6 +1,5 @@
 import {APIClient, Command} from '@heroku-cli/command'
 import {Config} from '@oclif/core'
-import path from 'node:path'
 import {stderr, stdout} from 'stdout-stderr'
 
 type CmdConstructorParams = ConstructorParameters<typeof Command>
@@ -35,10 +34,10 @@ export const runCommand = async (Cmd: GenericCmd, args: string[] = [], printStd 
 }
 
 export const getConfig = async () => {
-  const pjsonPath = path.join(process.cwd(), 'package.json')
-  const conf = new Config({root: pjsonPath})
-  await conf.load()
-  return conf
+  const root = require.resolve('../package.json')
+  const config = new Config({root})
+  await config.load()
+  return config
 }
 
 export const getHerokuAPI = async () => {

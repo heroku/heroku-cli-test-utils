@@ -8,7 +8,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src/eslint-config.js"
+    "dist/eslint-config.js"
   ],
   "devDependencies": {
     "@types/chai": "^4.3.13",
@@ -49,7 +49,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "npm run clean && tsc",
+    "copy-eslint-config": "cp src/eslint-config.js dist/",
+    "build": "npm run clean && tsc && npm run copy-eslint-config",
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts --config .eslintrc.js",
     "prepare": "npm run build",

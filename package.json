@@ -17,7 +17,8 @@
     "@types/sinon": "^17.0.4",
     "mocha": "^11.2.2",
     "nyc": "^17.1.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
   },
   "peerDependencies": {
     "chai": "^4.4.1",
@@ -27,8 +28,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-mocha": "^10.4.3",
     "nock": "^13.2.9",
-    "sinon": "^18.0.1",
-    "typescript": "^5.4.0"
+    "sinon": "^18.0.1"
   },
   "dependencies": {
     "@heroku-cli/color": "^2.0.4",

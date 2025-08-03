@@ -11,9 +11,9 @@
     "dist/eslint-config.js"
   ],
   "devDependencies": {
-    "@types/chai": "^4.3.13",
+    "@types/chai": "^5.2.2",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^22.15.3",
+    "@types/node": "^24.1.0",
     "@types/sinon": "^17.0.4",
     "mocha": "^11.2.2",
     "nyc": "^17.1.0",

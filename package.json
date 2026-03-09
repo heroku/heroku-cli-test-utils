@@ -4,6 +4,10 @@
   "description": "Test utilities for Heroku CLI",
   "author": "Heroku",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heroku/heroku-cli-test-utils"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

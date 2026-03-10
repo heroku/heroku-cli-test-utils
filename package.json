@@ -4,15 +4,25 @@
   "description": "Test utilities for Heroku CLI",
   "author": "Heroku",
   "license": "ISC",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/heroku/heroku-cli-test-utils"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./eslint-config": {
+      "types": "./dist/eslint-config.d.ts",
+      "default": "./dist/eslint-config.js"
+    }
+  },
   "files": [
-    "dist",
-    "dist/eslint-config.js"
+    "dist"
   ],
   "devDependencies": {
     "@types/chai": "^4.3.13",
@@ -20,6 +30,8 @@
     "@types/mocha": "^10.0.6",
     "@types/node": "^22.15.3",
     "@types/sinon": "^17.0.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-mocha": "^11.2.0",
     "mocha": "^11.3.0",
     "nyc": "^17.1.0",
     "ts-node": "^10.9.2",
@@ -35,14 +47,16 @@
     "sinon": "^18.0.1"
   },
   "dependencies": {
-    "@heroku-cli/color": "^2.0.4",
-    "@heroku-cli/command": "^11.5.0",
-    "@oclif/core": "^2.16.0",
+    "@heroku-cli/command": "^12.2.0",
+    "@heroku/heroku-cli-util": "^10.6.0",
+    "@oclif/core": "^4.8.4",
+    "ansis": "^4",
     "stdout-stderr": "^0.1.13"
   },
   "mocha": {
-    "require": [
-      "ts-node/register"
+    "loader": "ts-node/esm",
+    "extensions": [
+      "ts"
     ],
     "watch-extensions": "ts",
     "recursive": true,
@@ -53,8 +67,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "copy-eslint-config": "cp src/eslint-config.js dist/",
-    "build": "npm run clean && tsc && npm run copy-eslint-config",
+    "build": "npm run clean && tsc",
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts --config .eslintrc.js",
     "prepare": "npm run build",

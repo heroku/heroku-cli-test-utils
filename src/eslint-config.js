@@ -1,7 +1,6 @@
 module.exports = {
   extends: [
     'oclif',
-    'oclif-typescript',
     'plugin:mocha/recommended',
   ],
   ignorePatterns: ['dist/**/*'],

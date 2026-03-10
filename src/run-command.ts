@@ -9,8 +9,8 @@ import {getConfig} from './test-instances.js'
 // Use a broader type to bypass visibility checks while maintaining instance type safety
 // The run() return type matches oclif's Command.run(): Promise<any>
 
-export type GenericCmd =
-  | {new(argv: string[], config: Interfaces.Config): CommandInstance}
+export type GenericCmd
+  = | {new(argv: string[], config: Interfaces.Config): CommandInstance}
   | {prototype: CommandInstance}
 
 type CaptureOptions = {
@@ -110,9 +110,11 @@ function withCapturedOutput<T>(
   const getStderr = () => output.stderr.map(b => toString(b)).join('')
 
   const mock = (std: 'stderr' | 'stdout') =>
+    // eslint-disable-next-line no-undef -- BufferEncoding is a Node.js built-in type
     (str: string | Uint8Array, encoding?: ((err?: Error | null) => void) | BufferEncoding, cb?: (err?: Error | null) => void) => {
       output[std].push(str)
       if (print) {
+        // eslint-disable-next-line no-undef -- BufferEncoding is a Node.js built-in type
         originals[std].call(process[std], str, encoding as BufferEncoding, cb)
       }
 

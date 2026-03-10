@@ -1,5 +1,5 @@
-export {default as expectOutput} from './expect-output.js'
 export {default as eslintConfig} from './eslint-config.js'
+export {default as expectOutput} from './expect-output.js'
 export * from './init.js'
 export * from './run-command.js'
 export * from './test-instances.js'

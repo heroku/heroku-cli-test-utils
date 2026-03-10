@@ -1,10 +1,10 @@
 import {expect} from 'chai'
 import {ESLint} from 'eslint'
+import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
-import * as path from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __dirname = dirname(__filename)
 
 describe('eslint-config', function () {
   let eslintConfig: any
@@ -41,13 +41,12 @@ describe('eslint-config', function () {
   it('should have expected rules configured', function () {
     // Find the config object with our custom rules
     const rulesConfig = eslintConfig.find((c: any) =>
-      c.rules?.camelcase === 'warn' && c.rules?.['no-console'] === 'off'
-    )
+      c.rules?.camelcase === 'warn' && c.rules?.['no-console'] === 'off')
     expect(rulesConfig).to.exist
     expect(rulesConfig.rules).to.have.property('camelcase', 'warn')
     expect(rulesConfig.rules).to.have.property('no-console', 'off')
-    expect(rulesConfig.rules).to.have.property('indent')
-    expect(rulesConfig.rules.indent).to.be.an('array')
+    expect(rulesConfig.rules).to.have.property('@stylistic/indent')
+    expect(rulesConfig.rules['@stylistic/indent']).to.be.an('array')
   })
 
   it('should have ignores configured', function () {
@@ -60,8 +59,7 @@ describe('eslint-config', function () {
   it('should have test file overrides', function () {
     // Find the test file config
     const testConfig = eslintConfig.find((c: any) =>
-      c.files?.includes('test/**/*.ts')
-    )
+      c.files?.includes('test/**/*.ts'))
     expect(testConfig).to.exist
     expect(testConfig.files).to.include('test/**/*.ts')
     expect(testConfig.files).to.include('test/**/*.js')
@@ -71,7 +69,7 @@ describe('eslint-config', function () {
   describe('ESLint integration', function () {
     it('should work with ESLint 9 API', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: path.join(__dirname, '../src/eslint-config.ts'),
+        overrideConfigFile: join(__dirname, '../src/eslint-config.js'),
       })
 
       // Test that we can create an ESLint instance without errors
@@ -80,7 +78,7 @@ describe('eslint-config', function () {
 
     it('should lint TypeScript code successfully', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: path.join(__dirname, '../dist/eslint-config.js'),
+        overrideConfigFile: join(__dirname, '../dist/eslint-config.js'),
       })
 
       const validCode = `export function testFunction(): number {
@@ -99,7 +97,7 @@ describe('eslint-config', function () {
 
     it('should detect indent errors', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: path.join(__dirname, '../dist/eslint-config.js'),
+        overrideConfigFile: join(__dirname, '../dist/eslint-config.js'),
       })
 
       // Inline code with bad indentation
@@ -120,7 +118,7 @@ describe('eslint-config', function () {
 
     it('should allow console.log (no-console is off)', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: path.join(__dirname, '../dist/eslint-config.js'),
+        overrideConfigFile: join(__dirname, '../dist/eslint-config.js'),
       })
 
       const codeWithConsole = `
@@ -132,9 +130,7 @@ describe('eslint-config', function () {
         filePath: 'test.ts',
       })
 
-      const consoleErrors = results[0].messages.filter(
-        (msg) => msg.ruleId === 'no-console',
-      )
+      const consoleErrors = results[0].messages.filter(msg => msg.ruleId === 'no-console')
       expect(consoleErrors.length).to.equal(0)
     })
   })

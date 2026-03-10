@@ -1,14 +1,14 @@
 import {Command} from '@heroku-cli/command'
 import {expect} from 'chai'
+import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
-import * as path from 'path'
 
 import {runCommand} from '../src/run-command.js'
 import {getConfig, getHerokuAPI} from '../src/test-instances.js'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const testRoot = path.resolve(__dirname, '..')
+const __dirname = dirname(__filename)
+const testRoot = resolve(__dirname, '..')
 
 describe('run-command', function () {
   // Mock command for testing

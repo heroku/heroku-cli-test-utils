@@ -69,7 +69,8 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rm -rf dist",
-    "lint": "eslint . --ext .ts --config .eslintrc.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "prepare": "npm run build",
     "test": "nyc mocha  --forbid-only \"test/**/*.test.ts\""
   }

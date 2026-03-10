@@ -8,7 +8,6 @@
 //   // your additional config
 // ]
 
-// @ts-expect-error - no types available
 import oclifConfig from 'eslint-config-oclif'
 
 export default [
@@ -17,9 +16,11 @@ export default [
   // Heroku-specific rules
   {
     rules: {
+      '@stylistic/indent': ['error', 2, {MemberExpression: 1}],
+      '@stylistic/indent-binary-ops': 'off', // Conflicts with no-mixed-spaces-and-tabs
+      '@typescript-eslint/no-explicit-any': 'warn',
       camelcase: 'warn',
       'import/namespace': 'warn',
-      indent: ['error', 2, {MemberExpression: 1}],
       'no-console': 'off',
       'unicorn/prefer-string-replace-all': 'warn',
     },

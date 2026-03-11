@@ -38,13 +38,13 @@
     "typescript": "^5.4.0"
   },
   "peerDependencies": {
-    "chai": ">5",
+    "chai": ">=5",
     "eslint": "^9",
     "eslint-config-oclif": "^6",
     "eslint-plugin-import": "^2",
     "eslint-plugin-mocha": "^11",
-    "nock": ">14",
-    "sinon": ">20"
+    "nock": ">=14",
+    "sinon": ">=20"
   },
   "dependencies": {
     "@heroku-cli/command": "^12",

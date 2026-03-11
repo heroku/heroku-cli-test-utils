@@ -34,6 +34,6 @@ export default [
   },
   // Ignore patterns
   {
-    ignores: ['dist/**/*'],
+    ignores: ['dist/**/*', 'coverage/**/*'],
   },
 ]

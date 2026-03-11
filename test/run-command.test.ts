@@ -82,7 +82,8 @@ describe('run-command', function () {
   it('should strip ANSI codes by default', async function () {
     const {stdout} = await runCommand(TestCommand, [], {root: testRoot})
     // ANSI codes should be stripped from output
-    expect(stdout).to.not.match(/\x1b\[/)
+    // eslint-disable-next-line no-control-regex
+    expect(stdout).to.not.match(/\u001B\[/)
   })
 
   it('should not strip ANSI codes when stripAnsi is false', async function () {
@@ -116,9 +117,10 @@ describe('run-command', function () {
 
     it('should strip ANSI codes', async function () {
       const {stdout} = await captureOutput(() => {
-        process.stdout.write('\x1b[31mred text\x1b[0m\n')
+        process.stdout.write('\u001B[31mred text\u001B[0m\n')
       })
-      expect(stdout).to.not.match(/\x1b\[/)
+      // eslint-disable-next-line no-control-regex
+      expect(stdout).to.not.match(/\u001B\[/)
       expect(stdout).to.include('red text')
     })
   })

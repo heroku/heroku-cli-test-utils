@@ -40,16 +40,15 @@
   "peerDependencies": {
     "chai": ">5",
     "eslint": "^9",
-    "eslint-config-oclif": "^6.0.148",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-mocha": "^11.2.0",
+    "eslint-config-oclif": "^6",
+    "eslint-plugin-import": "^2",
+    "eslint-plugin-mocha": "^11",
     "nock": ">14",
     "sinon": ">20"
   },
   "dependencies": {
-    "@heroku-cli/command": "^12.2.0",
-    "@heroku/heroku-cli-util": "^10.6.0",
-    "@oclif/core": "^4.8.4",
+    "@heroku-cli/command": "^12",
+    "@oclif/core": "^4",
     "ansis": "^4"
   },
   "mocha": {

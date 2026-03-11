@@ -58,22 +58,6 @@ The configuration includes:
 - **Test file overrides** - Special rules for test files
 - **Ignore patterns** - Excludes `dist/` directory
 
-### ESLint 8 Support
-
-While this package supports ESLint 9 flat config, you can still use the configuration with ESLint 8 by importing the config object:
-
-```javascript
-// .eslintrc.js
-const { eslintConfig } = require('@heroku-cli/test-utils')
-
-module.exports = {
-  extends: eslintConfig.extends,
-  plugins: eslintConfig.plugins,
-  rules: eslintConfig.rules,
-  // ... rest of config
-}
-```
-
 ## Usage
 
 ### Running Commands
@@ -171,4 +155,4 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## License
 
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details. 
+This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.

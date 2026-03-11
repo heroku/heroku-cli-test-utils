@@ -4,45 +4,57 @@
   "description": "Test utilities for Heroku CLI",
   "author": "Heroku",
   "license": "ISC",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/heroku/heroku-cli-test-utils"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./eslint-config": {
+      "types": "./dist/eslint-config.d.ts",
+      "default": "./dist/eslint-config.js"
+    }
+  },
   "files": [
-    "dist",
-    "dist/eslint-config.js"
+    "dist"
   ],
   "devDependencies": {
-    "@types/chai": "^4.3.13",
-    "@types/mocha": "^10.0.6",
+    "@types/chai": "^5.2.3",
+    "@types/eslint": "^9.6.1",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.15.3",
     "@types/sinon": "^17.0.4",
-    "mocha": "^11.2.2",
-    "nyc": "^17.1.0",
+    "c8": "^10.1.3",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-mocha": "^11.2.0",
+    "mocha": "^11.7.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.0"
   },
   "peerDependencies": {
-    "chai": "^4.4.1",
-    "eslint": "^8.57.0 || ^9",
-    "eslint-config-oclif": "^5.0.0 || ^6.0.0",
-    "eslint-config-oclif-typescript": "^3.1.14",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-mocha": "^10.4.3 || ^11",
-    "nock": "^13.2.9",
-    "sinon": "^18.0.1"
+    "chai": ">=5",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6",
+    "eslint-plugin-import": "^2",
+    "eslint-plugin-mocha": "^11",
+    "nock": ">=14",
+    "sinon": ">=20"
   },
   "dependencies": {
-    "@heroku-cli/color": "^2.0.4",
-    "@heroku-cli/command": "^11.5.0",
-    "@oclif/core": "^2.16.0",
-    "stdout-stderr": "^0.1.13"
+    "@heroku-cli/command": "^12",
+    "@oclif/core": "^4",
+    "ansis": "^4"
   },
   "mocha": {
-    "require": [
-      "ts-node/register"
+    "loader": "ts-node/esm",
+    "extensions": [
+      "ts"
     ],
     "watch-extensions": "ts",
     "recursive": true,
@@ -53,11 +65,11 @@
     "node": ">=20"
   },
   "scripts": {
-    "copy-eslint-config": "cp src/eslint-config.js dist/",
-    "build": "npm run clean && tsc && npm run copy-eslint-config",
+    "build": "npm run clean && tsc",
     "clean": "rm -rf dist",
-    "lint": "eslint . --ext .ts --config .eslintrc.js",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "prepare": "npm run build",
-    "test": "nyc mocha  --forbid-only \"test/**/*.test.ts\""
+    "test": "c8 --check-coverage mocha --forbid-only \"test/**/*.test.ts\""
   }
 }

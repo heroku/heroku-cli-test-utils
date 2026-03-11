@@ -1,13 +1,10 @@
-const path = require('node:path')
-const {color} = require('@heroku-cli/color')
-const nock = require('nock')
+import nock from 'nock'
+import {resolve} from 'node:path'
 
 export function initCliTest(): void {
-  // eslint-disable-next-line no-multi-assign
-  process.env.TS_NODE_PROJECT = path.resolve('test/tsconfig.json');
+  process.env.TS_NODE_PROJECT = resolve('test/tsconfig.json');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (global as any).columns = '120'
-  color.enabled = false
+  (globalThis as any).columns = '120'
   nock.disableNetConnect()
   if (process.env.ENABLE_NET_CONNECT === 'true') {
     nock.enableNetConnect()

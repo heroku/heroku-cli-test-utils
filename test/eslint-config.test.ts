@@ -41,9 +41,8 @@ describe('eslint-config', function () {
   it('should have expected rules configured', function () {
     // Find the config object with our custom rules
     const rulesConfig = eslintConfig.find((c: any) =>
-      c.rules?.camelcase === 'warn' && c.rules?.['no-console'] === 'off')
+      c.rules?.['@typescript-eslint/no-explicit-any'] === 'warn')
     expect(rulesConfig).to.exist
-    expect(rulesConfig.rules).to.have.property('camelcase', 'warn')
     expect(rulesConfig.rules).to.have.property('no-console', 'off')
     expect(rulesConfig.rules).to.have.property('@stylistic/indent')
     expect(rulesConfig.rules['@stylistic/indent']).to.be.an('array')

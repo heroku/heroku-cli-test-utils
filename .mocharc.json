@@ -1,0 +1,11 @@
+{
+  "node-option": [
+    "import=tsx/esm"
+  ],
+  "extensions": ["ts"],
+  "watch-extensions": "ts",
+  "recursive": true,
+  "reporter": "spec",
+  "timeout": 360000,
+  "spec": "test/**/*.test.ts"
+}

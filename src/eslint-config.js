@@ -33,6 +33,6 @@ export default [
   },
   // Ignore patterns
   {
-    ignores: ['dist/**/*', 'coverage/**/*'],
+    ignores: ['dist/**/*', 'coverage/**/*', 'workflows-repo/**/*'],
   },
 ]

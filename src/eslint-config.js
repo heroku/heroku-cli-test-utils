@@ -19,7 +19,6 @@ export default [
       '@stylistic/indent': ['error', 2, {MemberExpression: 1}],
       '@stylistic/indent-binary-ops': 'off', // Conflicts with no-mixed-spaces-and-tabs
       '@typescript-eslint/no-explicit-any': 'warn',
-      camelcase: 'warn',
       'import/namespace': 'warn',
       'no-console': 'off',
       'unicorn/prefer-string-replace-all': 'warn',

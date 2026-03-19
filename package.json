@@ -59,6 +59,6 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prepare": "npm run build",
-    "test": "c8 --check-coverage mocha --forbid-only \"test/**/*.test.ts\""
+    "test": "npm run build && c8 --check-coverage mocha --forbid-only \"test/**/*.test.ts\""
   }
 }

@@ -26,14 +26,10 @@ export default [
       'unicorn/prefer-string-replace-all': 'warn',
     },
   },
-  // Neutralize mocha-plugin rules from oclif base so vitest consumers aren't punished.
-  // Re-enable them by importing the /mocha overlay.
+  // Test file overrides
   {
     files: ['test/**/*.ts', 'test/**/*.js'],
     rules: {
-      'mocha/no-exclusive-tests': 'off',
-      'mocha/no-mocha-arrows': 'off',
-      'mocha/no-skipped-tests': 'off',
       'prefer-arrow-callback': 'off',
     },
   },

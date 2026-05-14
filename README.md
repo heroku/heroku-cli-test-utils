@@ -74,7 +74,7 @@ The base configuration includes:
   - Custom indent rules for readability
 - **Ignore patterns** - Excludes `dist/`, `coverage/`, and `workflows-repo/`
 
-The `mocha` overlay adds `mocha/no-exclusive-tests` (error) and `mocha/no-skipped-tests` (warn) for test files.
+The `mocha` overlay is optional — the base config already passes through oclif's mocha-plugin defaults. Importing it bumps `mocha/no-exclusive-tests` from `warn` to `error` so a stray `it.only` fails CI.
 
 The `vitest` overlay adds `eslint-plugin-vitest`'s recommended rules and globals for test files, and globally disables every `mocha/*` rule. (The mocha plugin itself is loaded transitively via `eslint-config-oclif` and can't be unregistered in flat config — but the overlay neutralizes its rules so they produce zero diagnostics.)
 

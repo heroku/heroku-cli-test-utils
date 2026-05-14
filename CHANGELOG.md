@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v0.2.0...test-utils-v0.3.0) (2026-05-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* support vitest-based consumers ([#56](https://github.com/heroku/heroku-cli-test-utils/issues/56))
+
+### Features
+
+* support vitest-based consumers ([#56](https://github.com/heroku/heroku-cli-test-utils/issues/56)) ([32ec9ce](https://github.com/heroku/heroku-cli-test-utils/commit/32ec9ce94b650bd5dba4e8ad881181d15414dfff))
+
 ## [0.2.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v0.1.2...test-utils-v0.2.0) (2026-03-19)
 
 

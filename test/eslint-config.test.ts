@@ -11,7 +11,7 @@ describe('eslint-config', function () {
 
   before(async function () {
     // Import the eslint config from source
-    const configModule = await import('../src/eslint-config.js')
+    const configModule = await import('../src/eslint-config/index.js')
     eslintConfig = configModule.default
   })
 
@@ -68,7 +68,7 @@ describe('eslint-config', function () {
   describe('ESLint integration', function () {
     it('should work with ESLint 9 API', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: join(__dirname, '../src/eslint-config.js'),
+        overrideConfigFile: join(__dirname, '../src/eslint-config/index.js'),
       })
 
       // Test that we can create an ESLint instance without errors
@@ -77,7 +77,7 @@ describe('eslint-config', function () {
 
     it('should lint TypeScript code successfully', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: join(__dirname, '../dist/eslint-config.js'),
+        overrideConfigFile: join(__dirname, '../dist/eslint-config/index.js'),
       })
 
       const validCode = `export function testFunction(): number {
@@ -96,7 +96,7 @@ describe('eslint-config', function () {
 
     it('should detect indent errors', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: join(__dirname, '../dist/eslint-config.js'),
+        overrideConfigFile: join(__dirname, '../dist/eslint-config/index.js'),
       })
 
       // Inline code with bad indentation
@@ -117,7 +117,7 @@ describe('eslint-config', function () {
 
     it('should allow console.log (no-console is off)', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: join(__dirname, '../dist/eslint-config.js'),
+        overrideConfigFile: join(__dirname, '../dist/eslint-config/index.js'),
       })
 
       const codeWithConsole = `

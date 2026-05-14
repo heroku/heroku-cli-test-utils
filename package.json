@@ -17,8 +17,16 @@
       "default": "./dist/index.js"
     },
     "./eslint-config": {
-      "types": "./dist/eslint-config.d.ts",
-      "default": "./dist/eslint-config.js"
+      "types": "./dist/eslint-config/index.d.ts",
+      "default": "./dist/eslint-config/index.js"
+    },
+    "./eslint-config/mocha": {
+      "types": "./dist/eslint-config/mocha.d.ts",
+      "default": "./dist/eslint-config/mocha.js"
+    },
+    "./eslint-config/vitest": {
+      "types": "./dist/eslint-config/vitest.d.ts",
+      "default": "./dist/eslint-config/vitest.js"
     }
   },
   "files": [
@@ -31,16 +39,22 @@
     "@types/node": "^22.15.3",
     "@types/sinon": "^17.0.4",
     "c8": "^11.0.0",
+    "chai": "^5",
     "mocha": "^11.3.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "chai": ">=5",
     "eslint": "^9",
     "eslint-config-oclif": "^6",
+    "eslint-plugin-vitest": ">=0.5",
     "nock": ">=14",
     "sinon": ">=20"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-vitest": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@heroku-cli/command": "^12",

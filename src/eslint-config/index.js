@@ -1,11 +1,13 @@
-// ESLint 9 flat config for Heroku CLI projects
+// ESLint 9 flat config for Heroku CLI projects (test-framework-agnostic base)
 // Usage in other repos:
 //
 // import herokuEslintConfig from '@heroku-cli/test-utils/eslint-config'
+// import mochaOverlay from '@heroku-cli/test-utils/eslint-config/mocha'
+// // or: import vitestOverlay from '@heroku-cli/test-utils/eslint-config/vitest'
 //
 // export default [
 //   ...herokuEslintConfig,
-//   // your additional config
+//   ...mochaOverlay,
 // ]
 
 import oclifConfig from 'eslint-config-oclif'
@@ -24,10 +26,14 @@ export default [
       'unicorn/prefer-string-replace-all': 'warn',
     },
   },
-  // Test file overrides
+  // Neutralize mocha-plugin rules from oclif base so vitest consumers aren't punished.
+  // Re-enable them by importing the /mocha overlay.
   {
     files: ['test/**/*.ts', 'test/**/*.js'],
     rules: {
+      'mocha/no-exclusive-tests': 'off',
+      'mocha/no-mocha-arrows': 'off',
+      'mocha/no-skipped-tests': 'off',
       'prefer-arrow-callback': 'off',
     },
   },

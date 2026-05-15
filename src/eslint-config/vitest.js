@@ -1,4 +1,4 @@
-// Vitest overlay — applies eslint-plugin-vitest's recommended rules to test files
+// Vitest overlay — applies @vitest/eslint-plugin's recommended rules to test files
 // and disables every mocha-plugin rule globally.
 //
 // `eslint-config-oclif` loads `eslint-plugin-mocha` transitively, and ESLint flat
@@ -6,10 +6,10 @@
 // the loaded oclif config (rather than importing it directly, since it lives in
 // oclif's nested node_modules) and disable each rule by name.
 //
-// Requires `eslint-plugin-vitest` to be installed in the consumer repo.
+// Requires `@vitest/eslint-plugin` to be installed in the consumer repo.
 
+import vitest from '@vitest/eslint-plugin'
 import oclifConfig from 'eslint-config-oclif'
-import vitest from 'eslint-plugin-vitest'
 
 function findMochaPlugin() {
   for (const entry of oclifConfig) {

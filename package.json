@@ -36,19 +36,19 @@
     "@types/eslint": "^9.6.1",
     "@types/node": "^22.15.3",
     "@vitest/coverage-v8": "^4.0.0",
-    "eslint-plugin-vitest": "^0.5.4",
+    "@vitest/eslint-plugin": "^1.6.17",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.0"
   },
   "peerDependencies": {
+    "@vitest/eslint-plugin": ">=1.6",
     "eslint": "^9",
     "eslint-config-oclif": "^6",
-    "eslint-plugin-vitest": ">=0.5",
     "nock": ">=14"
   },
   "peerDependenciesMeta": {
-    "eslint-plugin-vitest": {
+    "@vitest/eslint-plugin": {
       "optional": true
     }
   },
@@ -56,9 +56,6 @@
     "@heroku-cli/command": "^12",
     "@oclif/core": "^4",
     "ansis": "^4"
-  },
-  "overrides": {
-    "serialize-javascript": "^7.0.5"
   },
   "engines": {
     "node": ">=20"

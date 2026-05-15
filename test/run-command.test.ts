@@ -40,9 +40,7 @@ describe('run-command', function () {
   it('should handle command errors', async function () {
     const {error} = await runCommand(ErrorCommand, [], {root: testRoot})
     expect(error).toBeInstanceOf(Error)
-    if (error) {
-      expect(error.message).toBe('test error')
-    }
+    expect((error as Error).message).toBe('test error')
   })
 
   it('should load config successfully', async function () {

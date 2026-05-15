@@ -1,4 +1,4 @@
 import base from './src/eslint-config/index.js'
-import mocha from './src/eslint-config/mocha.js'
+import vitest from './src/eslint-config/vitest.js'
 
-export default [...base, ...mocha]
+export default [...base, ...vitest]

@@ -1,7 +1,9 @@
-import {expect} from 'chai'
 import {ESLint} from 'eslint'
 import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
+import {
+  beforeAll, describe, expect, it,
+} from 'vitest'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -9,60 +11,60 @@ const __dirname = dirname(__filename)
 describe('eslint-config', function () {
   let eslintConfig: any
 
-  before(async function () {
+  beforeAll(async function () {
     // Import the eslint config from source
     const configModule = await import('../src/eslint-config/index.js')
     eslintConfig = configModule.default
   })
 
   it('should be a flat config array', function () {
-    expect(eslintConfig).to.be.an('array')
-    expect(eslintConfig.length).to.be.greaterThan(0)
+    expect(eslintConfig).toBeInstanceOf(Array)
+    expect(eslintConfig.length).toBeGreaterThan(0)
   })
 
   it('should include oclif config', function () {
     // oclif config is spread in as the first items
-    expect(eslintConfig[0]).to.be.an('object')
+    expect(eslintConfig[0]).toBeTypeOf('object')
   })
 
   it('should include mocha plugin config', function () {
     // Find the mocha config object
     const mochaConfig = eslintConfig.find((c: any) => c.name === 'mocha/recommended')
-    expect(mochaConfig).to.exist
+    expect(mochaConfig).toBeDefined()
   })
 
   it('should have import plugin configured', function () {
     // Find config with import plugin
     const configWithPlugins = eslintConfig.find((c: any) => c.plugins?.import)
-    expect(configWithPlugins).to.exist
-    expect(configWithPlugins.plugins.import).to.exist
+    expect(configWithPlugins).toBeDefined()
+    expect(configWithPlugins.plugins.import).toBeDefined()
   })
 
   it('should have expected rules configured', function () {
     // Find the config object with our custom rules
     const rulesConfig = eslintConfig.find((c: any) =>
       c.rules?.['@typescript-eslint/no-explicit-any'] === 'warn')
-    expect(rulesConfig).to.exist
-    expect(rulesConfig.rules).to.have.property('no-console', 'off')
-    expect(rulesConfig.rules).to.have.property('@stylistic/indent')
-    expect(rulesConfig.rules['@stylistic/indent']).to.be.an('array')
+    expect(rulesConfig).toBeDefined()
+    expect(rulesConfig.rules).toHaveProperty('no-console', 'off')
+    expect(rulesConfig.rules).toHaveProperty('@stylistic/indent')
+    expect(rulesConfig.rules['@stylistic/indent']).toBeInstanceOf(Array)
   })
 
   it('should have ignores configured', function () {
     // Find the ignores config
     const ignoresConfig = eslintConfig.find((c: any) => c.ignores)
-    expect(ignoresConfig).to.exist
-    expect(ignoresConfig.ignores).to.include('dist/**/*')
+    expect(ignoresConfig).toBeDefined()
+    expect(ignoresConfig.ignores).toContain('dist/**/*')
   })
 
   it('should have test file overrides', function () {
     // Find the test file config
     const testConfig = eslintConfig.find((c: any) =>
       c.files?.includes('test/**/*.ts'))
-    expect(testConfig).to.exist
-    expect(testConfig.files).to.include('test/**/*.ts')
-    expect(testConfig.files).to.include('test/**/*.js')
-    expect(testConfig.rules['prefer-arrow-callback']).to.equal('off')
+    expect(testConfig).toBeDefined()
+    expect(testConfig.files).toContain('test/**/*.ts')
+    expect(testConfig.files).toContain('test/**/*.js')
+    expect(testConfig.rules['prefer-arrow-callback']).toBe('off')
   })
 
   describe('ESLint integration', function () {
@@ -72,7 +74,7 @@ describe('eslint-config', function () {
       })
 
       // Test that we can create an ESLint instance without errors
-      expect(eslint).to.be.an('object')
+      expect(eslint).toBeTypeOf('object')
     })
 
     it('should lint TypeScript code successfully', async function () {
@@ -90,8 +92,8 @@ describe('eslint-config', function () {
       })
 
       // Should be able to lint (may have warnings but shouldn't crash)
-      expect(results).to.be.an('array')
-      expect(results).to.have.lengthOf(1)
+      expect(results).toBeInstanceOf(Array)
+      expect(results).toHaveLength(1)
     })
 
     it('should detect indent errors', async function () {
@@ -110,8 +112,8 @@ describe('eslint-config', function () {
       })
 
       // Should have indent errors or at least be lintable
-      expect(results).to.be.an('array')
-      expect(results).to.have.lengthOf(1)
+      expect(results).toBeInstanceOf(Array)
+      expect(results).toHaveLength(1)
       // Just verify it was linted (may or may not have errors depending on ESLint version)
     })
 
@@ -130,7 +132,7 @@ describe('eslint-config', function () {
       })
 
       const consoleErrors = results[0].messages.filter(msg => msg.ruleId === 'no-console')
-      expect(consoleErrors.length).to.equal(0)
+      expect(consoleErrors.length).toBe(0)
     })
   })
 })

@@ -9,7 +9,6 @@
 // Requires `eslint-plugin-vitest` to be installed in the consumer repo.
 
 import oclifConfig from 'eslint-config-oclif'
-// eslint-disable-next-line import/no-unresolved
 import vitest from 'eslint-plugin-vitest'
 
 function findMochaPlugin() {

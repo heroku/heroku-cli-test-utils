@@ -1,7 +1,7 @@
 import {Command} from '@heroku-cli/command'
-import {expect} from 'chai'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
+import {describe, expect, it} from 'vitest'
 
 import {captureOutput, runCommand} from '../src/run-command.js'
 import {getConfig, getHerokuAPI} from '../src/test-instances.js'
@@ -34,62 +34,62 @@ describe('run-command', function () {
 
   it('should run a command successfully', async function () {
     const {result} = await runCommand(TestCommand, [], {root: testRoot})
-    expect(result).to.deep.equal({success: true})
+    expect(result).toEqual({success: true})
   })
 
   it('should handle command errors', async function () {
     const {error} = await runCommand(ErrorCommand, [], {root: testRoot})
-    expect(error).to.be.an('Error')
+    expect(error).toBeInstanceOf(Error)
     if (error) {
-      expect(error.message).to.equal('test error')
+      expect(error.message).toBe('test error')
     }
   })
 
   it('should load config successfully', async function () {
     const config = await getConfig({root: testRoot})
-    expect(config).to.be.an('object')
-    expect(config.root).to.equal(testRoot)
+    expect(config).toBeTypeOf('object')
+    expect(config.root).toBe(testRoot)
   })
 
   it('should create Heroku API client', async function () {
     const api = await getHerokuAPI({root: testRoot})
-    expect(api).to.be.an('object')
+    expect(api).toBeTypeOf('object')
     // Add more specific API client checks if needed
   })
 
   it('should pass command arguments', async function () {
     const args = ['--flag', 'value']
     const {result} = await runCommand(TestCommand, args, {root: testRoot})
-    expect(result).to.deep.equal({success: true})
+    expect(result).toEqual({success: true})
   })
 
   it('should handle printStd option', async function () {
-    // This test is more about ensuring it doesn't throw
-    // The actual output behavior is hard to test due to stdout-stderr mocking
-    await runCommand(TestCommand, [], {root: testRoot}, {print: true})
+    // The actual output behavior is hard to test due to stdout-stderr mocking;
+    // we just want to confirm the option doesn't blow up.
+    await expect(runCommand(TestCommand, [], {root: testRoot}, {print: true})).resolves.toBeDefined()
   })
 
   it('should capture stderr output', async function () {
     const {stderr} = await runCommand(StderrCommand, [], {root: testRoot})
-    expect(stderr).to.include('error output')
+    expect(stderr).toContain('error output')
   })
 
   it('should handle string arguments', async function () {
     const {result} = await runCommand(TestCommand, '--flag value', {root: testRoot})
-    expect(result).to.deep.equal({success: true})
+    expect(result).toEqual({success: true})
   })
 
   it('should strip ANSI codes by default', async function () {
     const {stdout} = await runCommand(TestCommand, [], {root: testRoot})
     // ANSI codes should be stripped from output
     // eslint-disable-next-line no-control-regex
-    expect(stdout).to.not.match(/\u001B\[/)
+    expect(stdout).not.toMatch(/\u001B\[/)
   })
 
   it('should not strip ANSI codes when stripAnsi is false', async function () {
     const {stdout} = await runCommand(TestCommand, [], {root: testRoot}, {stripAnsi: false})
     // Output should exist (whether or not it has ANSI codes depends on the command)
-    expect(stdout).to.be.a('string')
+    expect(stdout).toBeTypeOf('string')
   })
 
   describe('captureOutput', function () {
@@ -97,14 +97,14 @@ describe('run-command', function () {
       const {stdout} = await captureOutput(() => {
         process.stdout.write('test output\n')
       })
-      expect(stdout).to.include('test output')
+      expect(stdout).toContain('test output')
     })
 
     it('should capture stderr from a function', async function () {
       const {stderr} = await captureOutput(() => {
         process.stderr.write('error output\n')
       })
-      expect(stderr).to.include('error output')
+      expect(stderr).toContain('error output')
     })
 
     it('should work with async functions', async function () {
@@ -112,7 +112,7 @@ describe('run-command', function () {
         await Promise.resolve()
         process.stdout.write('async output\n')
       })
-      expect(stdout).to.include('async output')
+      expect(stdout).toContain('async output')
     })
 
     it('should strip ANSI codes', async function () {
@@ -120,8 +120,8 @@ describe('run-command', function () {
         process.stdout.write('\u001B[31mred text\u001B[0m\n')
       })
       // eslint-disable-next-line no-control-regex
-      expect(stdout).to.not.match(/\u001B\[/)
-      expect(stdout).to.include('red text')
+      expect(stdout).not.toMatch(/\u001B\[/)
+      expect(stdout).toContain('red text')
     })
   })
 })

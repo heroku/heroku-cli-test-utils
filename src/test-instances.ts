@@ -3,28 +3,26 @@ import {Config, Interfaces} from '@oclif/core'
 import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 
-let conf: Config
+const configCache = new Map<string, Config>()
 
 export const getConfig = async (loadOpts?: Interfaces.LoadOptions) => {
   const __filename = fileURLToPath(import.meta.url)
   const __dirname = path.dirname(__filename)
   const defaultRoot = path.resolve(__dirname, '../..')
 
-  // If loadOpts are provided, create a new Config instance
-  if (loadOpts) {
-    const newConf = await Config.load(loadOpts)
-    return newConf
-  }
-
-  // Otherwise use the cached config
+  const opts = loadOpts ?? {root: defaultRoot}
+  const key = JSON.stringify(opts)
+  let conf = configCache.get(key)
   if (!conf) {
-    conf = new Config({
-      root: defaultRoot,
-    })
-    await conf.load()
+    conf = await Config.load(opts)
+    configCache.set(key, conf)
   }
 
   return conf
+}
+
+export const clearConfigCache = () => {
+  configCache.clear()
 }
 
 export const getHerokuAPI = async (loadOpts?: Interfaces.LoadOptions) => {

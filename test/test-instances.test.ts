@@ -6,17 +6,15 @@ import {
   beforeEach, describe, expect, it,
 } from 'vitest'
 
-import {getConfig, getHerokuAPI} from '../src/test-instances.js'
+import {clearConfigCache, getConfig, getHerokuAPI} from '../src/test-instances.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const testRoot = resolve(__dirname, '..')
 
 describe('test-instances', function () {
-  // Clear any cached config before tests
   beforeEach(function () {
-    // We need to clear the module cache to reset the cached config
-    // This is a bit hacky but necessary for testing the caching behavior
+    clearConfigCache()
   })
 
   describe('getConfig', function () {
@@ -30,9 +28,21 @@ describe('test-instances', function () {
       expect(config.root).toBe(testRoot)
     })
 
-    it('should not cache config when loadOpts provided', async function () {
-      // When loadOpts are provided, each call creates a new instance
+    it('should cache config by loadOpts', async function () {
       const config1 = await getConfig({root: testRoot})
+      const config2 = await getConfig({root: testRoot})
+      expect(config1).toBe(config2)
+    })
+
+    it('should return distinct configs for different loadOpts', async function () {
+      const config1 = await getConfig({root: testRoot})
+      const config2 = await getConfig({root: testRoot, version: '1.2.3'})
+      expect(config1).not.toBe(config2)
+    })
+
+    it('should clear cache when clearConfigCache is called', async function () {
+      const config1 = await getConfig({root: testRoot})
+      clearConfigCache()
       const config2 = await getConfig({root: testRoot})
       expect(config1).not.toBe(config2)
     })

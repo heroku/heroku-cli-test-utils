@@ -3,28 +3,35 @@ import {Config, Interfaces} from '@oclif/core'
 import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 
-let conf: Config
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const defaultRoot = path.resolve(__dirname, '../..')
 
+let cachedDefaultConfig: Config | undefined
+
+/**
+ * Returns a loaded oclif Config.
+ *
+ * Mutation contract:
+ * - When called with no arguments, the returned Config is cached and shared
+ *   across all callers in the process. Do not mutate it.
+ * - When loadOpts are provided, a fresh Config is loaded on every call and
+ *   is not cached.
+ */
 export const getConfig = async (loadOpts?: Interfaces.LoadOptions) => {
-  const __filename = fileURLToPath(import.meta.url)
-  const __dirname = path.dirname(__filename)
-  const defaultRoot = path.resolve(__dirname, '../..')
-
-  // If loadOpts are provided, create a new Config instance
   if (loadOpts) {
-    const newConf = await Config.load(loadOpts)
-    return newConf
+    return Config.load(loadOpts)
   }
 
-  // Otherwise use the cached config
-  if (!conf) {
-    conf = new Config({
-      root: defaultRoot,
-    })
-    await conf.load()
+  if (!cachedDefaultConfig) {
+    cachedDefaultConfig = await Config.load({root: defaultRoot})
   }
 
-  return conf
+  return cachedDefaultConfig
+}
+
+export const clearConfigCache = () => {
+  cachedDefaultConfig = undefined
 }
 
 export const getHerokuAPI = async (loadOpts?: Interfaces.LoadOptions) => {

@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v0.3.0...test-utils-v1.0.0) (2026-06-11)
+
+
+### Performance Improvements
+
+* cache Config in getConfig by loadOpts ([#69](https://github.com/heroku/heroku-cli-test-utils/issues/69)) ([d95ac16](https://github.com/heroku/heroku-cli-test-utils/commit/d95ac16aacc3c0363d76716f6bdf6dcd2499bfff))
+
+
+### Dependencies
+
+* bump @heroku-cli/command from 12.3.3 to 12.4.0 ([#68](https://github.com/heroku/heroku-cli-test-utils/issues/68)) ([882472e](https://github.com/heroku/heroku-cli-test-utils/commit/882472e251d0b1d5113d497cb7379fd6e1d8b102))
+* bump @oclif/core from 4.11.2 to 4.11.4 ([#65](https://github.com/heroku/heroku-cli-test-utils/issues/65)) ([c3cde37](https://github.com/heroku/heroku-cli-test-utils/commit/c3cde37426439826ad8e7a02c71a39464bef5b3d))
+
+
+### Miscellaneous Chores
+
+* release as 1.0.0 ([#71](https://github.com/heroku/heroku-cli-test-utils/issues/71)) ([eb46474](https://github.com/heroku/heroku-cli-test-utils/commit/eb464741c6619021761a8d9684af92fad7189c75))
+
 ## [0.3.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v0.2.0...test-utils-v0.3.0) (2026-05-14)
 
 

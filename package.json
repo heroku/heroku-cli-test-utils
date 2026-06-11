@@ -1,6 +1,6 @@
 {
   "name": "@heroku-cli/test-utils",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Test utilities for Heroku CLI",
   "author": "Heroku",
   "license": "ISC",

@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.0...test-utils-v1.0.1) (2026-07-17)
+
+
+### Dependencies
+
+* bump @heroku-cli/command from 12.4.0 to 12.4.1 ([#75](https://github.com/heroku/heroku-cli-test-utils/issues/75)) ([13e784e](https://github.com/heroku/heroku-cli-test-utils/commit/13e784ea37a63e1060766b3170fc02801752afbd))
+* bump @opentelemetry/core and @opentelemetry/sdk-trace-base ([#77](https://github.com/heroku/heroku-cli-test-utils/issues/77)) ([227e712](https://github.com/heroku/heroku-cli-test-utils/commit/227e712940b2520e642a16b350302f95afc32c60))
+* update transitive dependencies ([#81](https://github.com/heroku/heroku-cli-test-utils/issues/81)) ([c0cd948](https://github.com/heroku/heroku-cli-test-utils/commit/c0cd948bc28a6c65598eca6be2434c07a0eb1df0))
+
 ## [1.0.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v0.3.0...test-utils-v1.0.0) (2026-06-11)
 
 

@@ -53,7 +53,7 @@
     }
   },
   "dependencies": {
-    "@heroku-cli/command": "^12",
+    "@heroku-cli/command": "^13",
     "@oclif/core": "^4",
     "ansis": "^4"
   },

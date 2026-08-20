@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.1...test-utils-v1.0.2) (2026-08-20)
+
+
+### Dependencies
+
+* bump brace-expansion ([#86](https://github.com/heroku/heroku-cli-test-utils/issues/86)) ([a833cb3](https://github.com/heroku/heroku-cli-test-utils/commit/a833cb3d69a3fa09834f6d4795f837b26a2242bd))
+* bump js-yaml from 4.3.0 to 4.3.1 ([#87](https://github.com/heroku/heroku-cli-test-utils/issues/87)) ([f2c248b](https://github.com/heroku/heroku-cli-test-utils/commit/f2c248bf560f391342e4acfccf8a937348ccfa93))
+
 ## [1.0.1](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.0...test-utils-v1.0.1) (2026-07-17)
 
 

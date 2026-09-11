@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.3](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.2...test-utils-v1.0.3) (2026-09-11)
+
+
+### Dependencies
+
+* bump @humanfs/node from 0.16.7 to 0.16.8 ([#90](https://github.com/heroku/heroku-cli-test-utils/issues/90)) ([4023c6d](https://github.com/heroku/heroku-cli-test-utils/commit/4023c6db5320adf575723a44580f055a48349816))
+* bump browserslist from 4.28.1 to 4.28.9 ([#91](https://github.com/heroku/heroku-cli-test-utils/issues/91)) ([686affe](https://github.com/heroku/heroku-cli-test-utils/commit/686affeb0c15ca63bdf5d9c93a51a5cf86230295))
+* bump js-yaml from 4.3.1 to 4.3.2 ([#92](https://github.com/heroku/heroku-cli-test-utils/issues/92)) ([96df7fa](https://github.com/heroku/heroku-cli-test-utils/commit/96df7fa4bc076f5a8374b4524760b894d2d7470c))
+
 ## [1.0.2](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.1...test-utils-v1.0.2) (2026-08-20)
 
 

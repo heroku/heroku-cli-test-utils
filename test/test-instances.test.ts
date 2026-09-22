@@ -1,16 +1,21 @@
 import {APIClient} from '@heroku-cli/command'
 import {Config} from '@oclif/core'
-import {dirname, resolve} from 'node:path'
+import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {
-  afterEach, beforeEach, describe, expect, it, vi,
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
 } from 'vitest'
 
 import {clearConfigCache, getConfig, getHerokuAPI} from '../src/test-instances.js'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-const testRoot = resolve(__dirname, '..')
+const __dirname = path.dirname(__filename)
+const testRoot = path.resolve(__dirname, '..')
 
 describe('test-instances', function () {
   beforeEach(function () {

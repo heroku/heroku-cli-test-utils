@@ -3,7 +3,7 @@
 // without this overlay; importing it just bumps `mocha/no-exclusive-tests` from
 // `warn` to `error` so a stray `it.only` fails CI.
 
-export default [
+const mochaOverlay = [
   {
     files: ['test/**/*.ts', 'test/**/*.js'],
     rules: {
@@ -11,3 +11,5 @@ export default [
     },
   },
 ]
+
+export default mochaOverlay

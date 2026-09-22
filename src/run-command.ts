@@ -110,7 +110,8 @@ async function withCapturedOutput<T>(
   const getStderr = () => output.stderr.map(b => toString(b)).join('')
 
   const mock = (std: 'stderr' | 'stdout') =>
-    (str: string | Uint8Array, encoding?: ((err?: Error) => void) | BufferEncoding, cb?: (err?: Error) => void) => {
+    // eslint-disable-next-line @typescript-eslint/no-restricted-types -- must mirror node's write() callback signature, which allows null
+    (str: string | Uint8Array, encoding?: ((err?: Error | null) => void) | BufferEncoding, cb?: (err?: Error | null) => void) => {
       output[std].push(str)
       if (print) {
         originals[std].call(process[std], str, encoding as BufferEncoding, cb)

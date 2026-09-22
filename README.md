@@ -20,7 +20,7 @@ npm install --save-dev @heroku-cli/test-utils
 ## Requirements
 
 - Node.js >= 22.12
-- TypeScript >= 5.4.0
+- TypeScript >= 6 (required by the shared ESLint config; see [ESLint Configuration](#eslint-configuration))
 - ESM (ES Modules) support
 - A test runner of your choice (Mocha and Vitest are both supported)
 
@@ -64,6 +64,8 @@ export default [
 ```
 
 > **Note:** As of `eslint-config-oclif` 7, the config uses type-aware linting (`projectService`). ESLint must be able to resolve every linted file through a `tsconfig.json`, so make sure your test files (and root config files such as `vitest.config.ts`) are covered by your tsconfig's `include` — files outside the TypeScript project fail with a `was not found by the project service` parse error. If you build from the same tsconfig, keep a separate `tsconfig.build.json` that only includes `src` so test files aren't emitted to your published output.
+>
+> **TypeScript 6 required:** `eslint-config-oclif` 7 (via `eslint-config-xo`) declares a `typescript >=6` peer dependency. If your project is still on TypeScript 5, npm will install a *second*, nested TypeScript 6 for the lint stack, and the version skew crashes type-aware rules with `tsutils.unionConstituents is not a function`. Pin a single TypeScript `~6.0` at your project root (and, if needed, add `"overrides": { "typescript": "$typescript" }`) so the whole lint stack resolves one TypeScript. Note that TypeScript 6 requires an explicit `rootDir` in build configs that previously inferred it.
 
 ### What's Included
 

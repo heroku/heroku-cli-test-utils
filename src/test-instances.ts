@@ -1,5 +1,5 @@
 import {APIClient} from '@heroku-cli/command'
-import {Config, Interfaces} from '@oclif/core'
+import {Config, type Interfaces} from '@oclif/core'
 import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 
@@ -23,9 +23,7 @@ export const getConfig = async (loadOpts?: Interfaces.LoadOptions) => {
     return Config.load(loadOpts)
   }
 
-  if (!cachedDefaultConfig) {
-    cachedDefaultConfig = await Config.load({root: defaultRoot})
-  }
+  cachedDefaultConfig ??= await Config.load({root: defaultRoot})
 
   return cachedDefaultConfig
 }

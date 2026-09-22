@@ -34,7 +34,7 @@
   ],
   "devDependencies": {
     "@types/eslint": "^9.6.1",
-    "@types/node": "^22.15.3",
+    "@types/node": "^24.1.0",
     "@vitest/coverage-v8": "^5.0.1",
     "@vitest/eslint-plugin": "^1.6.17",
     "eslint": "^10.11.0",

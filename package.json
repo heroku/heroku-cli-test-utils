@@ -40,7 +40,7 @@
     "eslint": "^10.11.0",
     "eslint-config-oclif": "^7.1.7",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
+    "typescript": "~6.0.3",
     "vitest": "^5.0.1"
   },
   "peerDependencies": {
@@ -53,6 +53,9 @@
     "@vitest/eslint-plugin": {
       "optional": true
     }
+  },
+  "overrides": {
+    "typescript": "$typescript"
   },
   "dependencies": {
     "@heroku-cli/command": "^13",

@@ -1,15 +1,18 @@
-import {ESLint} from 'eslint'
-import {dirname, join} from 'node:path'
+import {ESLint, type Linter} from 'eslint'
+import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {
-  beforeAll, describe, expect, it,
+  beforeAll,
+  describe,
+  expect,
+  it,
 } from 'vitest'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const __dirname = path.dirname(__filename)
 
 describe('eslint-config', function () {
-  let eslintConfig: any
+  let eslintConfig: Linter.Config[]
 
   beforeAll(async function () {
     // Import the eslint config from source
@@ -29,48 +32,48 @@ describe('eslint-config', function () {
 
   it('should include mocha plugin config', function () {
     // Find the mocha config object
-    const mochaConfig = eslintConfig.find((c: any) => c.name === 'mocha/recommended')
+    const mochaConfig = eslintConfig.find(c => c.name === 'mocha/recommended')
     expect(mochaConfig).toBeDefined()
   })
 
   it('should have import plugin configured', function () {
-    // Find config with import plugin
-    const configWithPlugins = eslintConfig.find((c: any) => c.plugins?.import)
+    // Find config with import-x plugin (oclif 7 uses eslint-plugin-import-x)
+    const configWithPlugins = eslintConfig.find(c => c.plugins?.['import-x'])
     expect(configWithPlugins).toBeDefined()
-    expect(configWithPlugins.plugins.import).toBeDefined()
+    expect(configWithPlugins?.plugins?.['import-x']).toBeDefined()
   })
 
   it('should have expected rules configured', function () {
     // Find the config object with our custom rules
-    const rulesConfig = eslintConfig.find((c: any) =>
+    const rulesConfig = eslintConfig.find(c =>
       c.rules?.['@typescript-eslint/no-explicit-any'] === 'warn')
     expect(rulesConfig).toBeDefined()
-    expect(rulesConfig.rules).toHaveProperty('no-console', 'off')
-    expect(rulesConfig.rules).toHaveProperty('@stylistic/indent')
-    expect(rulesConfig.rules['@stylistic/indent']).toBeInstanceOf(Array)
+    expect(rulesConfig?.rules).toHaveProperty('no-console', 'off')
+    expect(rulesConfig?.rules).toHaveProperty('@stylistic/indent')
+    expect(rulesConfig?.rules?.['@stylistic/indent']).toBeInstanceOf(Array)
   })
 
   it('should have ignores configured', function () {
-    // Find the ignores config
-    const ignoresConfig = eslintConfig.find((c: any) => c.ignores)
+    // Find our ignores config (oclif ships its own global ignores block too)
+    const ignoresConfig = eslintConfig.find(c => c.ignores?.includes('dist/**/*'))
     expect(ignoresConfig).toBeDefined()
-    expect(ignoresConfig.ignores).toContain('dist/**/*')
+    expect(ignoresConfig?.ignores).toContain('dist/**/*')
   })
 
   it('should have test file overrides', function () {
     // Find the test file config
-    const testConfig = eslintConfig.find((c: any) =>
+    const testConfig = eslintConfig.find(c =>
       c.files?.includes('test/**/*.ts'))
     expect(testConfig).toBeDefined()
-    expect(testConfig.files).toContain('test/**/*.ts')
-    expect(testConfig.files).toContain('test/**/*.js')
-    expect(testConfig.rules['prefer-arrow-callback']).toBe('off')
+    expect(testConfig?.files).toContain('test/**/*.ts')
+    expect(testConfig?.files).toContain('test/**/*.js')
+    expect(testConfig?.rules?.['prefer-arrow-callback']).toBe('off')
   })
 
   describe('ESLint integration', function () {
-    it('should work with ESLint 9 API', async function () {
+    it('should work with the ESLint API', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: join(__dirname, '../src/eslint-config/index.js'),
+        overrideConfigFile: path.join(__dirname, '../src/eslint-config/index.js'),
       })
 
       // Test that we can create an ESLint instance without errors
@@ -79,7 +82,7 @@ describe('eslint-config', function () {
 
     it('should lint TypeScript code successfully', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: join(__dirname, '../dist/eslint-config/index.js'),
+        overrideConfigFile: path.join(__dirname, '../dist/eslint-config/index.js'),
       })
 
       const validCode = `export function testFunction(): number {
@@ -98,7 +101,7 @@ describe('eslint-config', function () {
 
     it('should detect indent errors', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: join(__dirname, '../dist/eslint-config/index.js'),
+        overrideConfigFile: path.join(__dirname, '../dist/eslint-config/index.js'),
       })
 
       // Inline code with bad indentation
@@ -119,7 +122,7 @@ describe('eslint-config', function () {
 
     it('should allow console.log (no-console is off)', async function () {
       const eslint = new ESLint({
-        overrideConfigFile: join(__dirname, '../dist/eslint-config/index.js'),
+        overrideConfigFile: path.join(__dirname, '../dist/eslint-config/index.js'),
       })
 
       const codeWithConsole = `

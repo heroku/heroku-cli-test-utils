@@ -1,5 +1,5 @@
 import {Command} from '@heroku-cli/command'
-import {dirname, resolve} from 'node:path'
+import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {describe, expect, it} from 'vitest'
 
@@ -7,8 +7,8 @@ import {captureOutput, runCommand} from '../src/run-command.js'
 import {getConfig, getHerokuAPI} from '../src/test-instances.js'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-const testRoot = resolve(__dirname, '..')
+const __dirname = path.dirname(__filename)
+const testRoot = path.resolve(__dirname, '..')
 
 describe('run-command', function () {
   // Mock command for testing
@@ -81,7 +81,7 @@ describe('run-command', function () {
     const {stdout} = await runCommand(TestCommand, [], {root: testRoot})
     // ANSI codes should be stripped from output
     // eslint-disable-next-line no-control-regex
-    expect(stdout).not.toMatch(/\u001B\[/)
+    expect(stdout).not.toMatch(/\u{1B}\[/v)
   })
 
   it('should not strip ANSI codes when stripAnsi is false', async function () {
@@ -115,10 +115,10 @@ describe('run-command', function () {
 
     it('should strip ANSI codes', async function () {
       const {stdout} = await captureOutput(() => {
-        process.stdout.write('\u001B[31mred text\u001B[0m\n')
+        process.stdout.write('\u{1B}[31mred text\u{1B}[0m\n')
       })
       // eslint-disable-next-line no-control-regex
-      expect(stdout).not.toMatch(/\u001B\[/)
+      expect(stdout).not.toMatch(/\u{1B}\[/v)
       expect(stdout).toContain('red text')
     })
   })

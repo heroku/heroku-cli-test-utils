@@ -19,22 +19,22 @@ npm install --save-dev @heroku-cli/test-utils
 
 ## Requirements
 
-- Node.js >= 20
-- TypeScript >= 5.4.0
+- Node.js >= 22.12
+- TypeScript >= 6 (required by the shared ESLint config; see [ESLint Configuration](#eslint-configuration))
 - ESM (ES Modules) support
 - A test runner of your choice (Mocha and Vitest are both supported)
 
 ## ESLint Configuration
 
-This package provides a shareable ESLint 9 flat config that extends oclif's base configuration with Heroku-specific rules. The base config is test-framework-agnostic; layer on the `mocha` or `vitest` overlay depending on what your repo uses.
+This package provides a shareable ESLint 10 flat config that extends oclif's base configuration with Heroku-specific rules. The base config is test-framework-agnostic; layer on the `mocha` or `vitest` overlay depending on what your repo uses.
 
 ### Setup
 
 1. Install the required peer dependencies:
 ```bash
-npm install --save-dev eslint@^9 eslint-config-oclif@^6
+npm install --save-dev eslint@^10 eslint-config-oclif@^7
 # vitest repos also need:
-npm install --save-dev eslint-plugin-vitest
+npm install --save-dev @vitest/eslint-plugin
 ```
 
 2. Create `eslint.config.js` in your project root:
@@ -63,6 +63,10 @@ export default [
 ]
 ```
 
+> **Note:** As of `eslint-config-oclif` 7, the config uses type-aware linting (`projectService`). ESLint must be able to resolve every linted file through a `tsconfig.json`, so make sure your test files (and root config files such as `vitest.config.ts`) are covered by your tsconfig's `include` — files outside the TypeScript project fail with a `was not found by the project service` parse error. If you build from the same tsconfig, keep a separate `tsconfig.build.json` that only includes `src` so test files aren't emitted to your published output.
+>
+> **TypeScript 6 required:** `eslint-config-oclif` 7 (via `eslint-config-xo`) declares a `typescript >=6` peer dependency. If your project is still on TypeScript 5, npm will install a *second*, nested TypeScript 6 for the lint stack, and the version skew crashes type-aware rules with `tsutils.unionConstituents is not a function`. Pin a single TypeScript `~6.0` at your project root (and, if needed, add `"overrides": { "typescript": "$typescript" }`) so the whole lint stack resolves one TypeScript. Note that TypeScript 6 requires an explicit `rootDir` in build configs that previously inferred it.
+
 ### What's Included
 
 The base configuration includes:
@@ -76,7 +80,7 @@ The base configuration includes:
 
 The `mocha` overlay is optional — the base config already passes through oclif's mocha-plugin defaults. Importing it bumps `mocha/no-exclusive-tests` from `warn` to `error` so a stray `it.only` fails CI.
 
-The `vitest` overlay adds `eslint-plugin-vitest`'s recommended rules and globals for test files, and globally disables every `mocha/*` rule. (The mocha plugin itself is loaded transitively via `eslint-config-oclif` and can't be unregistered in flat config — but the overlay neutralizes its rules so they produce zero diagnostics.)
+The `vitest` overlay adds `@vitest/eslint-plugin`'s recommended rules and globals for test files, and globally disables every `mocha/*` rule. (The mocha plugin itself is loaded transitively via `eslint-config-oclif` and can't be unregistered in flat config — but the overlay neutralizes its rules so they produce zero diagnostics.)
 
 ## Usage
 

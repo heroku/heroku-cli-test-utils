@@ -54,10 +54,14 @@ describe('eslint-config', function () {
   })
 
   it('should have ignores configured', function () {
-    // Find our ignores config (oclif ships its own global ignores block too)
-    const ignoresConfig = eslintConfig.find(c => c.ignores?.includes('dist/**/*'))
+    // Find our ignores config (oclif ships its own global ignores block too).
+    // Patterns are 'dir/**' (not 'dir/**/*') so ESLint prunes the whole
+    // directory from traversal — see the comment in src/eslint-config/index.js.
+    const ignoresConfig = eslintConfig.find(c => c.ignores?.includes('workflows-repo/**'))
     expect(ignoresConfig).toBeDefined()
-    expect(ignoresConfig?.ignores).toContain('dist/**/*')
+    expect(ignoresConfig?.ignores).toContain('dist/**')
+    expect(ignoresConfig?.ignores).toContain('coverage/**')
+    expect(ignoresConfig?.ignores).toContain('workflows-repo/**')
   })
 
   it('should have test file overrides', function () {

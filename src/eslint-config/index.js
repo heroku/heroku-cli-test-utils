@@ -33,9 +33,14 @@ const herokuEslintConfig = [
       'prefer-arrow-callback': 'off',
     },
   },
-  // Ignore patterns
+  // Ignore patterns. Use 'dir/**' (not 'dir/**/*') so ESLint prunes the whole
+  // directory from traversal. Under ESLint 10, 'dir/**/*' matches files but
+  // doesn't prune the dir, so `eslint .` still descends into it — and for
+  // workflows-repo (the heroku/npm-release-workflows checkout the release
+  // workflow injects) that means importing its eslint.config.js (whose
+  // @eslint/js dep isn't installed in the consumer), failing release validate.
   {
-    ignores: ['dist/**/*', 'coverage/**/*', 'workflows-repo/**/*'],
+    ignores: ['dist/**', 'coverage/**', 'workflows-repo/**'],
   },
 ]
 

@@ -54,9 +54,6 @@
       "optional": true
     }
   },
-  "overrides": {
-    "typescript": "$typescript"
-  },
   "dependencies": {
     "@heroku-cli/command": "^13",
     "@oclif/core": "^4",

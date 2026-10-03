@@ -23,6 +23,14 @@ const herokuEslintConfig = [
       '@typescript-eslint/no-explicit-any': 'warn',
       'import-x/namespace': 'warn',
       'no-console': 'off',
+      // Conflicts with perfectionist/sort-classes (also enabled by eslint-config-oclif),
+      // which orders public methods before private ones -- the opposite of this rule's
+      // private-before-public default. The two can't both be satisfied for a class with
+      // both a public and a private method; perfectionist is the more specifically
+      // configured of the pair (explicit `groups`) and matches the idiomatic oclif layout
+      // (public run() first, private helpers beneath), so this rule gives way. Latent until
+      // the eslint-config-oclif@7 bump installs, which is when unicorn enables this rule.
+      'unicorn/consistent-class-member-order': 'off',
       'unicorn/prefer-string-replace-all': 'warn',
     },
   },

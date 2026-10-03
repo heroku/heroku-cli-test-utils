@@ -1,6 +1,6 @@
 import type {OclifError} from '@oclif/core/interfaces'
 
-import {Interfaces} from '@oclif/core'
+import {type Interfaces} from '@oclif/core'
 import ansis from 'ansis'
 
 import {getConfig} from './test-instances.js'
@@ -9,25 +9,25 @@ import {getConfig} from './test-instances.js'
 // Use a broader type to bypass visibility checks while maintaining instance type safety
 // The run() return type matches oclif's Command.run(): Promise<any>
 
-export type GenericCmd
-  = | {new(argv: string[], config: Interfaces.Config): CommandInstance}
+export type GenericCmd =
+  | (new(argv: string[], config: Interfaces.Config) => CommandInstance)
   | {prototype: CommandInstance}
 
 type CaptureOptions = {
-  print?: boolean
-  stripAnsi?: boolean
+  print?: boolean;
+  stripAnsi?: boolean;
 }
 
 type CaptureResult<T> = {
-  error?: Error & Partial<OclifError>
-  result?: T
-  stderr: string
-  stdout: string
+  error?: Error & Partial<OclifError>;
+  result?: T;
+  stderr: string;
+  stdout: string;
 }
 
-interface CommandInstance {
+type CommandInstance = {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  run(): Promise<any>
+  run(): Promise<any>;
 }
 
 /**
@@ -45,7 +45,7 @@ export async function captureOutput(fn: () => Promise<void> | void): Promise<{st
 }
 
 /**
- * Run a command directly with an interface matching @oclif/test's runCommand.
+ * Run a command directly with an interface matching `@oclif/test`'s runCommand.
  * This version runs the command class directly (from src/) instead of using
  * dynamic loading, which ensures c8 coverage tracking works properly.
  *
@@ -65,17 +65,17 @@ export async function runCommand<T = unknown>(
 
   const conf = loadOpts ? await getConfig(loadOpts) : await getConfig()
   // Cast to constructor type to handle protected constructors
-  const Ctor = CommandClass as {new(argv: string[], config: Interfaces.Config): CommandInstance}
+  const Ctor = CommandClass as new(argv: string[], config: Interfaces.Config) => CommandInstance
   const instance = new Ctor(argsArray, conf)
 
   const {error, result, stderr, stdout} = await withCapturedOutput(
-    () => instance.run() as Promise<T>,
+    async () => instance.run() as Promise<T>,
     captureOpts,
   )
 
   if (error) {
     return {
-      error: error as Error,
+      error,
       stderr,
       stdout,
     }
@@ -87,7 +87,7 @@ export async function runCommand<T = unknown>(
 /**
  * Internal helper to capture stdout/stderr during function execution
  */
-function withCapturedOutput<T>(
+async function withCapturedOutput<T>(
   fn: () => Promise<T>,
   options: {print?: boolean; stripAnsi?: boolean} = {},
 ): Promise<{error?: Error; result: T; stderr: string; stdout: string}> {
@@ -110,11 +110,10 @@ function withCapturedOutput<T>(
   const getStderr = () => output.stderr.map(b => toString(b)).join('')
 
   const mock = (std: 'stderr' | 'stdout') =>
-    // eslint-disable-next-line no-undef -- BufferEncoding is a Node.js built-in type
+    // eslint-disable-next-line @typescript-eslint/no-restricted-types -- must mirror node's write() callback signature, which allows null
     (str: string | Uint8Array, encoding?: ((err?: Error | null) => void) | BufferEncoding, cb?: (err?: Error | null) => void) => {
       output[std].push(str)
       if (print) {
-        // eslint-disable-next-line no-undef -- BufferEncoding is a Node.js built-in type
         originals[std].call(process[std], str, encoding as BufferEncoding, cb)
       }
 
@@ -127,8 +126,8 @@ function withCapturedOutput<T>(
       return true
     }
 
-  process.stdout.write = mock('stdout') as typeof process.stdout.write
-  process.stderr.write = mock('stderr') as typeof process.stderr.write
+  process.stdout.write = mock('stdout')
+  process.stderr.write = mock('stderr')
 
   return fn()
     .then(result => ({
@@ -137,8 +136,8 @@ function withCapturedOutput<T>(
       stderr: getStderr(),
       stdout: getStdout(),
     }))
-    .catch(error => ({
-      error,
+    .catch((error: unknown) => ({
+      error: error as Error,
       result: undefined as T,
       stderr: getStderr(),
       stdout: getStdout(),

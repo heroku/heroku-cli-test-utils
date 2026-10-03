@@ -24,7 +24,7 @@ const mochaRulesOff = mochaPlugin
   ? Object.fromEntries(Object.keys(mochaPlugin.rules).map(name => [`mocha/${name}`, 'off']))
   : {}
 
-export default [
+const vitestOverlay = [
   {rules: mochaRulesOff},
   {
     files: ['test/**/*.ts', 'test/**/*.js'],
@@ -37,3 +37,5 @@ export default [
     },
   },
 ]
+
+export default vitestOverlay

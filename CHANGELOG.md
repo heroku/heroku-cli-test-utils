@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.4...test-utils-v1.0.5) (2026-10-06)
+
+
+### Dependencies
+
+* bump @heroku-cli/command from 13.2.0 to 13.2.3 ([#111](https://github.com/heroku/heroku-cli-test-utils/issues/111)) ([a28f384](https://github.com/heroku/heroku-cli-test-utils/commit/a28f38402b499e022e2256c296fe6686099626f4))
+
 ## [1.0.4](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.3...test-utils-v1.0.4) (2026-10-01)
 
 

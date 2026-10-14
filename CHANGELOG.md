@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.6](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.5...test-utils-v1.0.6) (2026-10-14)
+
+
+### Dependencies
+
+* bump @heroku-cli/command from 13.2.3 to 13.2.4 ([#116](https://github.com/heroku/heroku-cli-test-utils/issues/116)) ([b507762](https://github.com/heroku/heroku-cli-test-utils/commit/b50776221c8b1bda474c0fdc8ea6363a9b152be0))
+* bump source-map-js from 1.2.1 to 1.2.2 ([#114](https://github.com/heroku/heroku-cli-test-utils/issues/114)) ([5003017](https://github.com/heroku/heroku-cli-test-utils/commit/500301776fbe40abc39530a705b7828cc32227c6))
+
 ## [1.0.5](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.4...test-utils-v1.0.5) (2026-10-06)
 
 

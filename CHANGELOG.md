@@ -1,5 +1,69 @@
 # Changelog
 
+## [2.0.0-beta.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.4...test-utils-v2.0.0-beta.0) (2026-10-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* drops Node 20 support; the package now requires Node >=22.12.0
+* support vitest-based consumers ([#56](https://github.com/heroku/heroku-cli-test-utils/issues/56))
+* convert to ESM and ESLint 9 flat config ([#33](https://github.com/heroku/heroku-cli-test-utils/issues/33))
+
+### Features
+
+* convert to ESM and ESLint 9 flat config ([#33](https://github.com/heroku/heroku-cli-test-utils/issues/33)) ([0d71581](https://github.com/heroku/heroku-cli-test-utils/commit/0d7158131f6b503237c5fe993d8b009e93bf9fbf))
+* support vitest-based consumers ([#56](https://github.com/heroku/heroku-cli-test-utils/issues/56)) ([32ec9ce](https://github.com/heroku/heroku-cli-test-utils/commit/32ec9ce94b650bd5dba4e8ad881181d15414dfff))
+* upgrade to vitest 5, eslint 10, and eslint-config-oclif 7 ([06a8f9a](https://github.com/heroku/heroku-cli-test-utils/commit/06a8f9a8f1c84a5056ec6c01592523ae3ce360f3))
+
+
+### Bug Fixes
+
+* add build step to test script to ensure dist directory exists ([#40](https://github.com/heroku/heroku-cli-test-utils/issues/40)) ([c5d385c](https://github.com/heroku/heroku-cli-test-utils/commit/c5d385c2dd2991581643136ff0dd7ebd9cccb480))
+* drop stale bootstrap-sha from beta release config ([95797c5](https://github.com/heroku/heroku-cli-test-utils/commit/95797c53daa62f4163cc174d1e2d2de9e910c1bd))
+* **eslint-config:** prune ignored dirs with 'dir/**' not 'dir/**/*' ([6583817](https://github.com/heroku/heroku-cli-test-utils/commit/6583817235031ccb261d02c55fb9a37169ee21a4))
+* ignore workflows-repo directory in eslint config ([#39](https://github.com/heroku/heroku-cli-test-utils/issues/39)) ([38589e4](https://github.com/heroku/heroku-cli-test-utils/commit/38589e4398204e8de9b567745f5bd26b4b7f113b))
+* pin typescript to ~6.0 so oclif 7 lint stack resolves one version ([6c35f9f](https://github.com/heroku/heroku-cli-test-utils/commit/6c35f9fd72a0d689759cdb1f136c914ceb4d9709))
+
+
+### Performance Improvements
+
+* cache Config in getConfig by loadOpts ([#69](https://github.com/heroku/heroku-cli-test-utils/issues/69)) ([d95ac16](https://github.com/heroku/heroku-cli-test-utils/commit/d95ac16aacc3c0363d76716f6bdf6dcd2499bfff))
+
+
+### Dependencies
+
+* bump @heroku-cli/command from 12.2.0 to 12.3.3 ([#52](https://github.com/heroku/heroku-cli-test-utils/issues/52)) ([f952cc4](https://github.com/heroku/heroku-cli-test-utils/commit/f952cc491dd299a1c1b92febf9e5875b6bd13be0))
+* bump @heroku-cli/command from 12.3.3 to 12.4.0 ([#68](https://github.com/heroku/heroku-cli-test-utils/issues/68)) ([882472e](https://github.com/heroku/heroku-cli-test-utils/commit/882472e251d0b1d5113d497cb7379fd6e1d8b102))
+* bump @heroku-cli/command from 12.4.0 to 12.4.1 ([#75](https://github.com/heroku/heroku-cli-test-utils/issues/75)) ([13e784e](https://github.com/heroku/heroku-cli-test-utils/commit/13e784ea37a63e1060766b3170fc02801752afbd))
+* bump @heroku-cli/command from 12.4.1 to 13.2.0 ([#98](https://github.com/heroku/heroku-cli-test-utils/issues/98)) ([9ee4b96](https://github.com/heroku/heroku-cli-test-utils/commit/9ee4b96b8d7c591850b1a553fe0a01d3a5027a80))
+* bump @humanfs/node from 0.16.7 to 0.16.8 ([#90](https://github.com/heroku/heroku-cli-test-utils/issues/90)) ([4023c6d](https://github.com/heroku/heroku-cli-test-utils/commit/4023c6db5320adf575723a44580f055a48349816))
+* bump @oclif/core from 4.10.3 to 4.11.2 ([#55](https://github.com/heroku/heroku-cli-test-utils/issues/55)) ([61419e0](https://github.com/heroku/heroku-cli-test-utils/commit/61419e055b870b3561660ba92c071f5210982214))
+* bump @oclif/core from 4.11.2 to 4.11.4 ([#65](https://github.com/heroku/heroku-cli-test-utils/issues/65)) ([c3cde37](https://github.com/heroku/heroku-cli-test-utils/commit/c3cde37426439826ad8e7a02c71a39464bef5b3d))
+* bump @oclif/core from 4.11.4 to 4.14.0 ([#85](https://github.com/heroku/heroku-cli-test-utils/issues/85)) ([025f096](https://github.com/heroku/heroku-cli-test-utils/commit/025f09637385d0a4716aeb295443bf223c7640ce))
+* bump @oclif/core from 4.8.4 to 4.10.3 ([#48](https://github.com/heroku/heroku-cli-test-utils/issues/48)) ([cddab72](https://github.com/heroku/heroku-cli-test-utils/commit/cddab72ba610d0d7909f2ff40cf5201c57e79d98))
+* bump @opentelemetry/core and @opentelemetry/sdk-trace-base ([#77](https://github.com/heroku/heroku-cli-test-utils/issues/77)) ([227e712](https://github.com/heroku/heroku-cli-test-utils/commit/227e712940b2520e642a16b350302f95afc32c60))
+* bump @types/sinon from 17.0.4 to 21.0.1 ([#53](https://github.com/heroku/heroku-cli-test-utils/issues/53)) ([df8d450](https://github.com/heroku/heroku-cli-test-utils/commit/df8d45091618da5a63a4a89a6f65aaf2eb6e69bb))
+* bump actions/create-github-app-token from 2 to 3 ([#36](https://github.com/heroku/heroku-cli-test-utils/issues/36)) ([4650c9e](https://github.com/heroku/heroku-cli-test-utils/commit/4650c9ef3f9428a10980cc7ef01657f74202c2d1))
+* bump ansis from 4.3.1 to 4.4.0 ([#105](https://github.com/heroku/heroku-cli-test-utils/issues/105)) ([4318284](https://github.com/heroku/heroku-cli-test-utils/commit/4318284ec353b6b0b3f24b72937fb72980158bab))
+* bump brace-expansion ([#107](https://github.com/heroku/heroku-cli-test-utils/issues/107)) ([9bff5a6](https://github.com/heroku/heroku-cli-test-utils/commit/9bff5a646e80919c9a52bce7bc3255086a9e4705))
+* bump brace-expansion ([#45](https://github.com/heroku/heroku-cli-test-utils/issues/45)) ([8a12652](https://github.com/heroku/heroku-cli-test-utils/commit/8a126525a876c7c001317893e827f3dc34e6c031))
+* bump brace-expansion ([#86](https://github.com/heroku/heroku-cli-test-utils/issues/86)) ([a833cb3](https://github.com/heroku/heroku-cli-test-utils/commit/a833cb3d69a3fa09834f6d4795f837b26a2242bd))
+* bump browserslist from 4.28.1 to 4.28.9 ([#91](https://github.com/heroku/heroku-cli-test-utils/issues/91)) ([686affe](https://github.com/heroku/heroku-cli-test-utils/commit/686affeb0c15ca63bdf5d9c93a51a5cf86230295))
+* bump flatted from 3.4.1 to 3.4.2 ([#41](https://github.com/heroku/heroku-cli-test-utils/issues/41)) ([8c75ff4](https://github.com/heroku/heroku-cli-test-utils/commit/8c75ff4141362d93d37f56a4ae27c06177a28bf6))
+* bump js-yaml from 4.3.0 to 4.3.1 ([#87](https://github.com/heroku/heroku-cli-test-utils/issues/87)) ([f2c248b](https://github.com/heroku/heroku-cli-test-utils/commit/f2c248bf560f391342e4acfccf8a937348ccfa93))
+* bump js-yaml from 4.3.1 to 4.3.2 ([#92](https://github.com/heroku/heroku-cli-test-utils/issues/92)) ([96df7fa](https://github.com/heroku/heroku-cli-test-utils/commit/96df7fa4bc076f5a8374b4524760b894d2d7470c))
+* bump lodash from 4.17.23 to 4.18.1 ([#49](https://github.com/heroku/heroku-cli-test-utils/issues/49)) ([e47a967](https://github.com/heroku/heroku-cli-test-utils/commit/e47a9673f7f47e47dc04b06993c7c65bbb935aae))
+* bump the dev-patch-minor-dependencies group across 1 directory with 2 updates ([#58](https://github.com/heroku/heroku-cli-test-utils/issues/58)) ([dfddc88](https://github.com/heroku/heroku-cli-test-utils/commit/dfddc88217db11b9fa5c895bccb5b09d1b94a442))
+* update dependencies to resolve 3pp vulns ([#50](https://github.com/heroku/heroku-cli-test-utils/issues/50)) ([81917aa](https://github.com/heroku/heroku-cli-test-utils/commit/81917aa1f13fefe3f501c4159e1a1331578f5340))
+* update transitive dependencies ([#81](https://github.com/heroku/heroku-cli-test-utils/issues/81)) ([c0cd948](https://github.com/heroku/heroku-cli-test-utils/commit/c0cd948bc28a6c65598eca6be2434c07a0eb1df0))
+
+
+### Miscellaneous Chores
+
+* release 0.1.2 ([#30](https://github.com/heroku/heroku-cli-test-utils/issues/30)) ([7dd115a](https://github.com/heroku/heroku-cli-test-utils/commit/7dd115a8c207f6f9f4739d31a933f6c28877d751))
+* release 2.0.0-beta.0 ([002e296](https://github.com/heroku/heroku-cli-test-utils/commit/002e2961f3fe8d8416fe6a40f385ccf921d119bc))
+* release as 1.0.0 ([#71](https://github.com/heroku/heroku-cli-test-utils/issues/71)) ([eb46474](https://github.com/heroku/heroku-cli-test-utils/commit/eb464741c6619021761a8d9684af92fad7189c75))
+
 ## [1.0.3](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.2...test-utils-v1.0.3) (2026-09-22)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0-beta.1](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v2.0.0-beta.0...test-utils-v2.0.0-beta.1) (2026-10-16)
+
+
+### Bug Fixes
+
+* use command v14 and Core v5 in test utilities ([#119](https://github.com/heroku/heroku-cli-test-utils/issues/119)) ([c5735db](https://github.com/heroku/heroku-cli-test-utils/commit/c5735db9b9aca9140ae31a9e3fa9939292d89647))
+
 ## [2.0.0-beta.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.4...test-utils-v2.0.0-beta.0) (2026-10-01)
 
 

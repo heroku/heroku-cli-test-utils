@@ -23,6 +23,9 @@ npm install --save-dev @heroku-cli/test-utils
 - TypeScript >= 6 (required by the shared ESLint config; see [ESLint Configuration](#eslint-configuration))
 - ESM (ES Modules) support
 - A test runner of your choice (Mocha and Vitest are both supported)
+- `@heroku-cli/command` v14 and `@oclif/core` v5 as peer dependencies
+
+The command and Core packages are peer dependencies so test utilities share the same runtime instances as the CLI under test.
 
 ## ESLint Configuration
 

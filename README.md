@@ -86,21 +86,32 @@ The `vitest` overlay adds `@vitest/eslint-plugin`'s recommended rules and global
 
 For vitest repos, this package also provides a shareable base vitest config at `@heroku-cli/test-utils/vitest-config`, so you no longer hand-maintain the cross-repo defaults in every `vitest.config.ts`. It sets the `v8` coverage provider, `disableConsoleIntercept: true` (required by `runCommand`/`captureOutput`, which write directly to `process.stdout`/`stderr`), and excludes the release workflow's `./workflows-repo` checkout from test discovery.
 
-Compose it with vitest's `mergeConfig`, then add only what's specific to your repo (test dir, timeout, coverage thresholds/reporter):
+Install the peer dependencies (`vitest`, plus `@vitest/coverage-v8` for the `v8` coverage provider this config sets):
 
-```javascript
-import { mergeConfig } from 'vitest/config'
-import herokuVitestConfig from '@heroku-cli/test-utils/vitest-config'
-
-export default mergeConfig(herokuVitestConfig, {
-  test: {
-    include: ['test/**/*.test.ts'],
-    testTimeout: 60_000,
-  },
-})
+```bash
+npm install --save-dev vitest @vitest/coverage-v8
 ```
 
-`mergeConfig` concatenates arrays, so your excludes/coverage lists are added to the shared ones rather than replacing them. `vitest` is an optional peer dependency, needed only by consumers of this export.
+Compose it with vitest's `mergeConfig`, wrapping your overrides in `defineConfig(...)` so they stay type-checked, and add only what's specific to your repo (test dir, timeout, coverage thresholds/reporter):
+
+```javascript
+import { defineConfig, mergeConfig } from 'vitest/config'
+import herokuVitestConfig from '@heroku-cli/test-utils/vitest-config'
+
+export default mergeConfig(
+  herokuVitestConfig,
+  defineConfig({
+    test: {
+      include: ['test/**/*.test.ts'],
+      testTimeout: 60_000,
+    },
+  }),
+)
+```
+
+> **Wrap overrides in `defineConfig`.** `mergeConfig`'s second argument is typed `any`, so a bare object literal silently drops type-checking — a misspelled option (e.g. `testTimout`, or `thresholds.line` instead of `lines`) would compile and be ignored. Wrapping in `defineConfig(...)` restores it (and avoids a "Configuration file is too complex" throw if you enable `coverage.thresholds.autoUpdate`).
+
+`mergeConfig` concatenates arrays, so your `exclude`/coverage lists are **added to** the shared ones — they can't replace or remove shared entries. `vitest` and `@vitest/coverage-v8` are optional peer dependencies, needed only by consumers of this export.
 
 ## Usage
 

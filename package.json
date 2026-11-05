@@ -49,13 +49,17 @@
     "vitest": "^5.0.1"
   },
   "peerDependencies": {
+    "@vitest/coverage-v8": "^5",
     "@vitest/eslint-plugin": ">=1.6",
     "eslint": "^10",
     "eslint-config-oclif": "^7",
     "nock": ">=14",
-    "vitest": ">=5"
+    "vitest": "^5"
   },
   "peerDependenciesMeta": {
+    "@vitest/coverage-v8": {
+      "optional": true
+    },
     "@vitest/eslint-plugin": {
       "optional": true
     },

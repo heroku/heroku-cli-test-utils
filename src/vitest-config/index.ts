@@ -1,48 +1,40 @@
-import {configDefaults, defineConfig} from 'vitest/config'
+import {
+  configDefaults,
+  coverageConfigDefaults,
+  defineConfig,
+  type ViteUserConfig,
+} from 'vitest/config'
 
 /**
  * Shared vitest base config for Heroku CLI repos.
  *
- * Compose it in a repo's `vitest.config.ts` with vitest's `mergeConfig` so the
- * repo can override individual options without losing the shared defaults:
+ * Compose it in a repo's `vitest.config.ts` with vitest's `mergeConfig`, and
+ * wrap the repo's own overrides in `defineConfig(...)` so they stay type-checked:
  *
- * ```ts
- * import {mergeConfig} from 'vitest/config'
- * import herokuVitestConfig from '@heroku-cli/test-utils/vitest-config'
+ *   mergeConfig(herokuVitestConfig, defineConfig({test: {...}}))
  *
- * export default mergeConfig(herokuVitestConfig, {
- *   test: {
- *     include: ['test/ **\/*.test.ts'], // this repo's test location
- *     testTimeout: 60_000,
- *     coverage: {thresholds: {lines: 80}},
- *   },
- * })
- * ```
+ * See the "Vitest Configuration" section of the README for a full example.
  *
- * `mergeConfig` replaces scalars and concatenates arrays, so a repo *adds to*
- * (rather than clobbers) the shared `exclude`/coverage lists. Mirrors the
- * `@heroku-cli/test-utils/eslint-config` export.
+ * Note: `mergeConfig` replaces scalars but *concatenates* arrays — a repo adds
+ * to the shared `exclude`/coverage lists, it cannot replace or remove entries.
  *
  * Deliberately left to each repo (no consensus across our repos): `include`
  * (test location varies — `test/`, `src/`, `tests/`), `testTimeout`,
  * `coverage.thresholds`, `coverage.reporter`, `setupFiles`, and `globals`.
  */
-export default defineConfig({
+// Annotate with vitest/config's `ViteUserConfig` (a declared peer) so the
+// emitted .d.ts doesn't reference `vite` directly, which isn't a dependency.
+const config: ViteUserConfig = defineConfig({
   test: {
     coverage: {
-      // Don't count tests, type decls, or build output against coverage.
-      exclude: [
-        '**/*.d.ts',
-        '**/*.test.ts',
-        '**/*.spec.ts',
-        'dist/**',
-        'coverage/**',
-        'node_modules/**',
-      ],
-      // Measure the published surface; override if the repo ships from
-      // elsewhere (e.g. `lib/**`).
+      // Spread vitest's own coverage defaults, then keep tests and type decls
+      // out of the measured set. (dist/coverage/node_modules can't match the
+      // `src/**/*.ts` include below, so they don't need listing here.)
+      exclude: [...coverageConfigDefaults.exclude, '**/*.d.ts', '**/*.test.ts', '**/*.spec.ts'],
+      // Measure the published surface. Additive: a repo that ships from
+      // elsewhere (e.g. `lib/**`) adds to this list — it can't replace it.
       include: ['src/**/*.ts'],
-      // v8 is what essentially every Heroku repo uses.
+      // Requires `@vitest/coverage-v8` (declared as an optional peer dep).
       provider: 'v8',
     },
 
@@ -65,3 +57,5 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, '**/dist/**', 'workflows-repo/**'],
   },
 })
+
+export default config

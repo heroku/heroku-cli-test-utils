@@ -82,6 +82,26 @@ The `mocha` overlay is optional — the base config already passes through oclif
 
 The `vitest` overlay adds `@vitest/eslint-plugin`'s recommended rules and globals for test files, and globally disables every `mocha/*` rule. (The mocha plugin itself is loaded transitively via `eslint-config-oclif` and can't be unregistered in flat config — but the overlay neutralizes its rules so they produce zero diagnostics.)
 
+## Vitest Configuration
+
+For vitest repos, this package also provides a shareable base vitest config at `@heroku-cli/test-utils/vitest-config`, so you no longer hand-maintain the cross-repo defaults in every `vitest.config.ts`. It sets the `v8` coverage provider, `disableConsoleIntercept: true` (required by `runCommand`/`captureOutput`, which write directly to `process.stdout`/`stderr`), and excludes the release workflow's `./workflows-repo` checkout from test discovery.
+
+Compose it with vitest's `mergeConfig`, then add only what's specific to your repo (test dir, timeout, coverage thresholds/reporter):
+
+```javascript
+import { mergeConfig } from 'vitest/config'
+import herokuVitestConfig from '@heroku-cli/test-utils/vitest-config'
+
+export default mergeConfig(herokuVitestConfig, {
+  test: {
+    include: ['test/**/*.test.ts'],
+    testTimeout: 60_000,
+  },
+})
+```
+
+`mergeConfig` concatenates arrays, so your excludes/coverage lists are added to the shared ones rather than replacing them. `vitest` is an optional peer dependency, needed only by consumers of this export.
+
 ## Usage
 
 ### Running Commands

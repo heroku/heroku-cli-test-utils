@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v2.0.0...test-utils-v2.1.0) (2026-11-05)
+
+
+### Features
+
+* add shared vitest base config export ([#129](https://github.com/heroku/heroku-cli-test-utils/issues/129)) ([4d1ec2a](https://github.com/heroku/heroku-cli-test-utils/commit/4d1ec2a4e599c477a0c5cdea6b97efd4844c5ab7))
+
 ## [2.0.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v1.0.5...test-utils-v2.0.0) (2026-10-29)
 
 

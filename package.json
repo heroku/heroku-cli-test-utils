@@ -27,6 +27,10 @@
     "./eslint-config/vitest": {
       "types": "./dist/eslint-config/vitest.d.ts",
       "default": "./dist/eslint-config/vitest.js"
+    },
+    "./vitest-config": {
+      "types": "./dist/vitest-config/index.d.ts",
+      "default": "./dist/vitest-config/index.js"
     }
   },
   "files": [
@@ -48,10 +52,14 @@
     "@vitest/eslint-plugin": ">=1.6",
     "eslint": "^10",
     "eslint-config-oclif": "^7",
-    "nock": ">=14"
+    "nock": ">=14",
+    "vitest": ">=5"
   },
   "peerDependenciesMeta": {
     "@vitest/eslint-plugin": {
+      "optional": true
+    },
+    "vitest": {
       "optional": true
     }
   },

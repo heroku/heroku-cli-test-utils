@@ -1,21 +1,12 @@
-import {defineConfig} from 'vitest/config'
+import defineHerokuVitestConfig from './src/vitest-config/index.js'
 
-export default defineConfig({
+// Dogfood our shared config factory (published as
+// `@heroku-cli/test-utils/vitest-config`), pointing at local source to avoid a
+// build-order dependency. We pass only what's specific to this repo; the factory
+// merges it over the shared defaults.
+export default defineHerokuVitestConfig({
   test: {
     coverage: {
-      exclude: [
-        '**/*.d.ts',
-        '**/*.test.ts',
-        'test/**/*',
-        'dist/**/*',
-        'coverage/**',
-        'bin/**/*',
-        'scripts/**/*',
-        'tmp/**/*',
-        '**/*.mjs',
-      ],
-      include: ['src/**/*.ts'],
-      provider: 'v8',
       reporter: ['text-summary', 'html', 'lcov'],
       thresholds: {
         branches: 65,
@@ -24,10 +15,6 @@ export default defineConfig({
         statements: 65,
       },
     },
-    // captureOutput in src/run-command.ts replaces process.stdout/stderr.write
-    // directly; vitest's interceptor sits in front of it and would swallow the
-    // bytes before they reach our wrapper.
-    disableConsoleIntercept: true,
     include: ['test/**/*.test.ts'],
     testTimeout: 360_000,
   },

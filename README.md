@@ -82,6 +82,53 @@ The `mocha` overlay is optional — the base config already passes through oclif
 
 The `vitest` overlay adds `@vitest/eslint-plugin`'s recommended rules and globals for test files, and globally disables every `mocha/*` rule. (The mocha plugin itself is loaded transitively via `eslint-config-oclif` and can't be unregistered in flat config — but the overlay neutralizes its rules so they produce zero diagnostics.)
 
+## Vitest Configuration
+
+For vitest repos, this package also provides a shareable vitest config factory at `@heroku-cli/test-utils/vitest-config`, so you no longer hand-maintain the cross-repo defaults in every `vitest.config.ts`. The base sets the `v8` coverage provider, `disableConsoleIntercept: true` (required by `runCommand`/`captureOutput`, which write directly to `process.stdout`/`stderr`), a default `src/**/*.ts` coverage surface, and excludes the release workflow's `./workflows-repo` checkout from test discovery.
+
+Install the peer dependencies (`vitest`, plus `@vitest/coverage-v8` for the `v8` coverage provider this config sets):
+
+```bash
+npm install --save-dev vitest @vitest/coverage-v8
+```
+
+Call the factory in your `vitest.config.ts`, passing only what's specific to your repo (test dir, timeout, coverage thresholds/reporter):
+
+```javascript
+import defineHerokuVitestConfig from '@heroku-cli/test-utils/vitest-config'
+
+export default defineHerokuVitestConfig({
+  test: {
+    include: ['test/**/*.test.ts'],
+    testTimeout: 60_000,
+  },
+})
+```
+
+Overrides win per key, and **arrays replace rather than concatenate**, so you can override any individual option — including the source layout:
+
+```javascript
+export default defineHerokuVitestConfig({
+  test: {
+    coverage: { include: ['lib/**/*.ts'] }, // replaces the default src/**/*.ts
+  },
+})
+```
+
+To *extend* a shared list instead of replacing it, spread the exported `herokuCoverageExclude` / `herokuTestExclude` constants into your override:
+
+```javascript
+import defineHerokuVitestConfig, { herokuCoverageExclude } from '@heroku-cli/test-utils/vitest-config'
+
+export default defineHerokuVitestConfig({
+  test: {
+    coverage: { exclude: [...herokuCoverageExclude, 'fixtures/**'] },
+  },
+})
+```
+
+The factory types its argument, so a misspelled option (e.g. `testTimout`, or `thresholds.line` instead of `lines`) is a compile error rather than a silently-ignored one. `vitest` and `@vitest/coverage-v8` are optional peer dependencies, needed only by consumers of this export.
+
 ## Usage
 
 ### Running Commands

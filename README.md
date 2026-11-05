@@ -84,7 +84,7 @@ The `vitest` overlay adds `@vitest/eslint-plugin`'s recommended rules and global
 
 ## Vitest Configuration
 
-For vitest repos, this package also provides a shareable base vitest config at `@heroku-cli/test-utils/vitest-config`, so you no longer hand-maintain the cross-repo defaults in every `vitest.config.ts`. It sets the `v8` coverage provider, `disableConsoleIntercept: true` (required by `runCommand`/`captureOutput`, which write directly to `process.stdout`/`stderr`), and excludes the release workflow's `./workflows-repo` checkout from test discovery.
+For vitest repos, this package also provides a shareable vitest config factory at `@heroku-cli/test-utils/vitest-config`, so you no longer hand-maintain the cross-repo defaults in every `vitest.config.ts`. The base sets the `v8` coverage provider, `disableConsoleIntercept: true` (required by `runCommand`/`captureOutput`, which write directly to `process.stdout`/`stderr`), a default `src/**/*.ts` coverage surface, and excludes the release workflow's `./workflows-repo` checkout from test discovery.
 
 Install the peer dependencies (`vitest`, plus `@vitest/coverage-v8` for the `v8` coverage provider this config sets):
 
@@ -92,26 +92,42 @@ Install the peer dependencies (`vitest`, plus `@vitest/coverage-v8` for the `v8`
 npm install --save-dev vitest @vitest/coverage-v8
 ```
 
-Compose it with vitest's `mergeConfig`, wrapping your overrides in `defineConfig(...)` so they stay type-checked, and add only what's specific to your repo (test dir, timeout, coverage thresholds/reporter):
+Call the factory in your `vitest.config.ts`, passing only what's specific to your repo (test dir, timeout, coverage thresholds/reporter):
 
 ```javascript
-import { defineConfig, mergeConfig } from 'vitest/config'
-import herokuVitestConfig from '@heroku-cli/test-utils/vitest-config'
+import defineHerokuVitestConfig from '@heroku-cli/test-utils/vitest-config'
 
-export default mergeConfig(
-  herokuVitestConfig,
-  defineConfig({
-    test: {
-      include: ['test/**/*.test.ts'],
-      testTimeout: 60_000,
-    },
-  }),
-)
+export default defineHerokuVitestConfig({
+  test: {
+    include: ['test/**/*.test.ts'],
+    testTimeout: 60_000,
+  },
+})
 ```
 
-> **Wrap overrides in `defineConfig`.** `mergeConfig`'s second argument is typed `any`, so a bare object literal silently drops type-checking — a misspelled option (e.g. `testTimout`, or `thresholds.line` instead of `lines`) would compile and be ignored. Wrapping in `defineConfig(...)` restores it (and avoids a "Configuration file is too complex" throw if you enable `coverage.thresholds.autoUpdate`).
+Overrides win per key, and **arrays replace rather than concatenate**, so you can override any individual option — including the source layout:
 
-`mergeConfig` concatenates arrays, so your `exclude`/coverage lists are **added to** the shared ones — they can't replace or remove shared entries. `vitest` and `@vitest/coverage-v8` are optional peer dependencies, needed only by consumers of this export.
+```javascript
+export default defineHerokuVitestConfig({
+  test: {
+    coverage: { include: ['lib/**/*.ts'] }, // replaces the default src/**/*.ts
+  },
+})
+```
+
+To *extend* a shared list instead of replacing it, spread the exported `herokuCoverageExclude` / `herokuTestExclude` constants into your override:
+
+```javascript
+import defineHerokuVitestConfig, { herokuCoverageExclude } from '@heroku-cli/test-utils/vitest-config'
+
+export default defineHerokuVitestConfig({
+  test: {
+    coverage: { exclude: [...herokuCoverageExclude, 'fixtures/**'] },
+  },
+})
+```
+
+The factory types its argument, so a misspelled option (e.g. `testTimout`, or `thresholds.line` instead of `lines`) is a compile error rather than a silently-ignored one. `vitest` and `@vitest/coverage-v8` are optional peer dependencies, needed only by consumers of this export.
 
 ## Usage
 

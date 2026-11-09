@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.1](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v2.1.0...test-utils-v2.1.1) (2026-11-09)
+
+
+### Dependencies
+
+* bump @heroku-cli/command from 13.2.0 to 13.2.6 ([#128](https://github.com/heroku/heroku-cli-test-utils/issues/128)) ([611509b](https://github.com/heroku/heroku-cli-test-utils/commit/611509b9ed4ee494c0c7aac684034f4e8a718fe6))
+* bump ansis from 4.4.0 to 4.5.0 ([#131](https://github.com/heroku/heroku-cli-test-utils/issues/131)) ([b851576](https://github.com/heroku/heroku-cli-test-utils/commit/b851576b1bc8efdb6f253f13bb37d157e7e26620))
+
 ## [2.1.0](https://github.com/heroku/heroku-cli-test-utils/compare/test-utils-v2.0.0...test-utils-v2.1.0) (2026-11-09)
 
 
